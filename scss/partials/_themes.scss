@@ -1,0 +1,66 @@
+// 
+// themes
+//
+
+$default : #333 #aaa;
+$red     : #c0392b #95a5a6;
+$green   : #27ae60 #bdc3c7;
+$blue    : #2c3e50 #bdc3c7;
+
+
+@mixin colorSet( $colors: $default ) {
+  $dark  : nth($colors, 1);
+  $light : nth($colors, 2);
+  
+  //
+  // global
+  //
+  .btn-alpha {
+    background-color: $dark;
+  }
+
+
+  //
+  // container
+  //
+  #game-container {
+    border: $game-border-width solid $dark;
+    
+    .grid-cell {
+      background-color: $dark;
+
+      &.light-cell {
+        background-color: $light;
+      }
+    }
+  }
+
+
+  //
+  // controls 
+  //
+  #game-controls {
+    border: $game-border-width solid $dark;
+  }
+}
+
+
+// default theme 
+body {
+  @include colorSet();
+}
+
+// red theme
+body.red-theme {
+  @include colorSet( $red );
+}
+
+// green theme
+body.green-theme {
+  @include colorSet( $green );
+}
+
+// blue theme
+body.blue-theme {
+  @include colorSet( $blue );
+}

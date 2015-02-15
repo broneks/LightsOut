@@ -1,0 +1,26 @@
+//
+// Controls
+//
+
+@mixin controls-width() {
+  width: $outer-size + ( $game-padding-sides * 2 ) + ( $game-border-width * 2 );
+  margin: 0 auto;
+}
+
+
+#game-controls {
+  // @include controls-width();
+  width: $outer-size;
+  margin: 0 auto;
+  padding: $game-padding;
+  border-radius: $border-radius;
+}
+
+#level-name {
+  @include controls-width();
+  text-align: center;
+}
+
+#counter-wrapper {
+  margin-bottom: $game-vertical-margin;
+}

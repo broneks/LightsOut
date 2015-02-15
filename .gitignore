@@ -1,0 +1,11 @@
+lib/*
+!lib/require.min.js
+
+npm-debug.log
+node_modules/
+
+sftp-config*
+*.sublime-*
+
+/component.json
+app/bower_components 

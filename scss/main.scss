@@ -1,0 +1,33 @@
+/*! LightsOut ~ by Bronek Szulc @ github.com/bszulc */
+
+//
+// Main
+//
+
+@import 'bourbon';
+
+
+// dimesions
+$size        : 400;
+$outer-size  : $size * 1px;
+$inner-size  : ( $size / 5 ) * 1px;
+$extra-space : ( $size / 10 ) * 1px;
+
+
+// spacing
+$game-vertical-margin : ( $size / 25 ) * 1px;
+$game-padding-sides   : 7px;
+$game-border-width    : 2px;
+
+
+// common
+$border-radius : 3px;
+
+
+// themes and colors
+@import 'partials/themes';
+
+
+@import 'partials/global';
+@import 'partials/container';
+@import 'partials/controls';
