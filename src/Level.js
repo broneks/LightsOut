@@ -76,7 +76,7 @@ define(['util', 'nodes', 'levels', 'Cell', 'Controls'], function( util, nodes, l
 
     this.visualizeBlueprint( blueprint );
 
-    util.text( nodes.levelName, 'Level ' + ( this.number + 1 ) ); 
+    util.text( nodes.levelName, 'Level ' + ( this.number + 1 ), true ); 
   };
 
 
@@ -105,8 +105,7 @@ define(['util', 'nodes', 'levels', 'Cell', 'Controls'], function( util, nodes, l
       return a + b; 
     });
 
-    // --CONSOLE LOG
-    console.log( sumOfStates );
+    // console.log( sumOfStates );
 
     // the level is complete if the sum of the cell states is zero
     this.completed = sumOfStates === 0;
@@ -117,25 +116,24 @@ define(['util', 'nodes', 'levels', 'Cell', 'Controls'], function( util, nodes, l
   // reset the level by deleting the rows and cells from the DOM and re-creating them
   //
   Level.prototype.reset = function() {
-    // var rows = util.getByClass( nodes.rowClass );
+    if ( this.completed ) return;
 
-    // this.cells.forEach(function( row ) {
-    //  row.forEach(function( cell ) {
-    //    cell.delete();        
-    //  })
-    // });
+    var rows = util.getByClass( nodes.rowClass, true );
 
-    // console.log(rows);
+    this.cells.forEach(function( row ) {
+     row.forEach(function( cell ) {
+       cell.delete();        
+     });
+    });
 
-    // [].forEach.call(rows, function( row ) {
-    //  // console.log( row );
-    //  util.remove( nodes.main, row );
-    // });
+    rows.forEach(function( row ) {
+      util.remove( nodes.main, row );
+    });
 
-    // this.cells = [];
-    // this.grid  = [];
+    this.cells = [];
+    this.grid  = [];
 
-    // this.render( this.number );
+    this.render( this.number );
   };
 
 

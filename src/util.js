@@ -21,6 +21,8 @@ define(function() {
   // clone an array and all of its contents
   //
   util.cloneArray = function( arr ) {
+    if ( !Array.isArray( arr ) ) return;
+
     return arr.slice( 0 );
   };
 
@@ -129,8 +131,13 @@ define(function() {
   //
   // get element by class
   //
-  util.getByClass = function( className ) {
-    return document.getElementsByClassName( className );
+  util.getByClass = function( className, returnArray ) {
+    var elts = document.getElementsByClassName( className );
+    
+    if ( returnArray )
+      return Array.prototype.slice.call( elts );
+    else
+      return elts;
   };
 
 
@@ -140,16 +147,6 @@ define(function() {
   util.getById = function( id ) {
     return document.getElementById( id );
   };
-
-
-  //
-  // get an element by its attribute and attribute value
-  //
-  // util.getByAttr = function( attr, value ) {
-  //  var nodes = document.querySelectorAll( '[' + attr + ']=' + value );
-
-  //  return nodes || [];
-  // };
 
 
   return util;

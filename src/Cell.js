@@ -98,15 +98,16 @@ define(['util', 'nodes'], function( util, nodes ) {
   // nullify the cell if the level is being reset
   //
   Cell.prototype.delete = function() {
-    // var parent = this.cellNode.parentNode;
+    var parent = this.cellNode.parentNode;
 
-    // util.remove( parent, this.cellNode );
+    util.remove( parent, this.cellNode );
     
-    // this.level    = null;
-    // this.state    = null;
-    // this.rowPos   = null;
-    // this.cellPos  = null;
-    // this.cellNode = null;
+    this.level    = null;
+    this.controls = null;
+    this.state    = null;
+    this.rowPos   = null;
+    this.cellPos  = null;
+    this.cellNode = null;
   };
 
   return Cell;
