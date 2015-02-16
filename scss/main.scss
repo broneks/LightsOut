@@ -9,15 +9,16 @@
 
 // dimesions
 $size        : 400;
+$rows        : 5;
 $outer-size  : $size * 1px;
-$inner-size  : ( $size / 5 ) * 1px;
+$inner-size  : ( $size / $rows ) * 1px;
 $extra-space : ( $size / 10 ) * 1px;
 
 
 // spacing
 $game-vertical-margin : ( $size / 25 ) * 1px;
 $game-padding-sides   : 7px;
-$game-border-width    : 2px;
+$game-border-width    : 1px;
 
 
 // common
@@ -25,7 +26,7 @@ $border-radius : 3px;
 
 
 // mobile 
-$mobile-width-breakpoint  : ( $size * 1px ) + ( $extra-space * 2 ); 
+$mobile-width-breakpoint  : ( $size * 1px ) + ( $extra-space * 2 );
 $mobile-game-border-width : 1px;
 
 

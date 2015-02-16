@@ -9,7 +9,7 @@
   $mobile-margin       : 3%;
   $mobile-game-padding : 2%;
   $mobile-cell-padding : 1%;
-
+  $mobile-inner-size   : 100% / $rows;
   $mobile-inner-border : 1px solid #fff;
   
 
@@ -45,7 +45,7 @@
 
     .grid-row {
       height: 0;
-      padding: 0 0 20%;
+      padding: 0 0 $mobile-inner-size;
 
       &:not(:first-child) {
         border-top: $mobile-inner-border;
@@ -55,7 +55,7 @@
     .grid-cell {
       height: 0;
       width: 100px;
-      padding: 0 0 20%;
+      padding: 0 0 $mobile-inner-size;
 
       &:not(:first-child) {
         border-left: $mobile-inner-border;
