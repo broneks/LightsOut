@@ -24,6 +24,11 @@ $game-border-width    : 2px;
 $border-radius : 3px;
 
 
+// mobile 
+$mobile-width-breakpoint  : ( $size * 1px ) + ( $extra-space * 2 ); 
+$mobile-game-border-width : 1px;
+
+
 // themes and colors
 @import 'partials/themes';
 
@@ -31,3 +36,4 @@ $border-radius : 3px;
 @import 'partials/global';
 @import 'partials/container';
 @import 'partials/controls';
+@import 'partials/media';

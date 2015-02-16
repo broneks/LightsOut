@@ -18,9 +18,11 @@
 
 #level-name {
   @include controls-width();
+  min-height: 37px;
   text-align: center;
 }
 
 #counter-wrapper {
+  margin: 0;
   margin-bottom: $game-vertical-margin;
 }

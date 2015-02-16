@@ -1,5 +1,5 @@
 // 
-// themes
+// Themes
 //
 
 $default : #333 #aaa;
@@ -9,11 +9,11 @@ $blue    : #2c3e50 #bdc3c7;
 
 
 @mixin colorSet( $colors: $default ) {
-  $dark  : nth($colors, 1);
-  $light : nth($colors, 2);
+  $dark  : nth( $colors, 1 );
+  $light : nth( $colors, 2 );
   
   //
-  // global
+  // Global
   //
   .btn-alpha {
     background-color: $dark;
@@ -21,7 +21,7 @@ $blue    : #2c3e50 #bdc3c7;
 
 
   //
-  // container
+  // Container
   //
   #game-container {
     border: $game-border-width solid $dark;
@@ -37,10 +37,20 @@ $blue    : #2c3e50 #bdc3c7;
 
 
   //
-  // controls 
+  // Controls 
   //
   #game-controls {
     border: $game-border-width solid $dark;
+  }
+
+
+  @media screen and ( max-width: $mobile-width-breakpoint ) {
+    
+    #game-container,
+    #game-controls {
+      border-width: $mobile-game-border-width;
+    }
+
   }
 }
 
