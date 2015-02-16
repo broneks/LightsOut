@@ -40,8 +40,8 @@ define(['util', 'nodes'], function( util, nodes ) {
   // trigger a level reset once the reset button is clicked
   //
   Controls.prototype.reset = function() {
-    if ( this.level.completed ) return;
-    
+    if ( ( this.moves === 0 ) || this.level.completed ) return;
+
     this.moves = 0;
     this.updateCounter();
     this.level.reset();
