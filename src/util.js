@@ -52,13 +52,12 @@ define(function() {
   // add classes to an element
   //
   util.addClasses = function( node, classes ) {
-    if ( Array.isArray( classes ) ) {
+    if ( Array.isArray( classes ) )
       classes.forEach(function( className ) {
         node.classList.add( className );
       });
-    } else {
+    else
       node.classList.add( classes );
-    }
 
     return node;
   };
@@ -68,13 +67,12 @@ define(function() {
   // remove classes from an element
   //
   util.removeClasses = function( node, classes ) {
-    if ( Array.isArray( classes ) ) {
+    if ( Array.isArray( classes ) )
       classes.forEach(function( className ) {
         node.classList.remove( className );
       });
-    } else {
+    else
       util.classList.remove( classes );
-    }
 
     return node;
   };
