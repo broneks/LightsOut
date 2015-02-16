@@ -4,19 +4,45 @@ define(['util', 'nodes'], function( util, nodes ) {
   function Controls( level ) {
     var resetButtonClasses = ['reset-game', 'btn', 'btn-alpha'];
     var resetButton        = util.elt( 'button', resetButtonClasses, null, 'Reset' );
+    
     resetButton.addEventListener( 'click', this.reset.bind( this ), false );
 
     util.append( nodes.controlsButtons, resetButton );
-    util.text( nodes.counter, 0 );
 
-    this.level = level;
-    this.moves = 0;
+    this.level        = level;
+    this.maxPoints    = 1150;
+    this.minPoints    = 100;
+    this.modifier     = 11;
+
+    this.score        = 0;
+    this.moves        = 0;
     this.counterNode  = nodes.counter;
     this.controlsNode = nodes.controls;
   }
 
   Controls.prototype = {};
   Controls.prototype.constructor = Controls;
+
+
+  //
+  // display the updated score
+  //
+  Controls.prototype.displayScore = function() {
+    util.text( nodes.score, this.score, true );
+  };
+
+
+  //
+  // calculate points after level is completed
+  //
+  Controls.prototype.updateScore = function() {
+    if ( this.moves <= this.level.minMoves )
+      this.score += this.maxPoints;
+    else
+      this.score += util.greaterNumber( ( this.maxPoints - this.moves * this.modifier ), this.minPoints );
+
+    this.displayScore();
+  };
 
 
   //

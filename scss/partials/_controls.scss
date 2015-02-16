@@ -9,7 +9,6 @@
 
 
 #game-controls {
-  // @include controls-width();
   width: $outer-size;
   margin: 0 auto;
   padding: $game-padding;
@@ -22,7 +21,14 @@
   text-align: center;
 }
 
-#counter-wrapper {
+#moves-and-score {
+  margin: 0 2px $game-vertical-margin;
+  @include clearfix;
+}
+
+#counter-wrapper,
+#score-wrapper {
+  width: 50%;
+  float: left;
   margin: 0;
-  margin-bottom: $game-vertical-margin;
 }

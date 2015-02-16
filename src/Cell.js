@@ -68,9 +68,9 @@ define(['util', 'nodes'], function( util, nodes ) {
     this.state = !this.state;
 
     if ( this.state )
-      this.cellNode.classList.add( nodes.lightCellClass );
+      util.addClass( this.cellNode, nodes.lightCellClass );
     else
-      this.cellNode.classList.remove( nodes.lightCellClass );
+      util.removeClass( this.cellNode, nodes.lightCellClass );
   };
 
 
@@ -88,9 +88,10 @@ define(['util', 'nodes'], function( util, nodes ) {
 
     this.updateState();
 
-    this.level.update();
-
     this.controls.countMoves();
+
+    // must be last
+    this.level.update();
   };
 
 
@@ -98,9 +99,7 @@ define(['util', 'nodes'], function( util, nodes ) {
   // nullify the cell if the level is being reset
   //
   Cell.prototype.delete = function() {
-    var parent = this.cellNode.parentNode;
-
-    util.remove( parent, this.cellNode );
+    util.remove( this.cellNode.parentNode, this.cellNode );
     
     this.level    = null;
     this.controls = null;

@@ -3,6 +3,7 @@ define({
   levelName       : document.getElementById( 'level-name' ),
   controls        : document.getElementById( 'game-controls' ),
   counter         : document.getElementById( 'counter' ),
+  score           : document.getElementById( 'score' ),
   controlsButtons : document.getElementById( 'controls-buttons' ),
   rowClass        : 'grid-row',
   cellClass       : 'grid-cell',

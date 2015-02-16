@@ -19,6 +19,7 @@ body {
 .wrapper {
   width: ( $size * 1px ) + $extra-space;
   margin: 0 auto;
+  @include clearfix;
 }
 
 .btn {

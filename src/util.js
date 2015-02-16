@@ -10,9 +10,27 @@ define(function() {
   util.exists = function( x ) {
     return (
       ( typeof x !== 'undefined' ) && 
-      ( x !== null ) && 
-      ( x ) && 
-      ( x.length )
+      ( x !== null ) &&
+      ( x.length ) || 
+      ( x )
+    );
+  };
+
+  //
+  // check if x does not exists, is null or empty
+  //
+  util.notExists = function( x ) {
+    return !util.exists( x );
+  };
+
+
+  //
+  // check if x is a number
+  //
+  util.isNumber = function( x ) {
+    return (
+      ( typeof x === 'number' ) &&
+      ( isFinite( x ) )
     );
   };
 
@@ -24,6 +42,19 @@ define(function() {
     if ( !Array.isArray( arr ) ) return;
 
     return arr.slice( 0 );
+  };
+
+
+  //
+  // return the bigger number
+  //
+  util.greaterNumber = function( a, b ) {
+    var greater;
+    
+    if ( this.isNumber( a ) && this.isNumber( b ) ) 
+      greater = ( a > b ) ? a : b;
+
+    return greater;
   };
 
 
@@ -51,7 +82,7 @@ define(function() {
   //
   // add classes to an element
   //
-  util.addClasses = function( node, classes ) {
+  util.addClass = function( node, classes ) {
     if ( Array.isArray( classes ) )
       classes.forEach(function( className ) {
         node.classList.add( className );
@@ -66,13 +97,13 @@ define(function() {
   //
   // remove classes from an element
   //
-  util.removeClasses = function( node, classes ) {
+  util.removeClass = function( node, classes ) {
     if ( Array.isArray( classes ) )
       classes.forEach(function( className ) {
         node.classList.remove( className );
       });
     else
-      util.classList.remove( classes );
+      node.classList.remove( classes );
 
     return node;
   };
@@ -97,7 +128,7 @@ define(function() {
   util.elt = function( name, classNames, attrs, text ) {
     var elt = document.createElement( name );
 
-    if ( this.exists( classNames ) ) this.addClasses( elt, classNames );
+    if ( this.exists( classNames ) ) this.addClass( elt, classNames );
     if ( this.exists( attrs ) ) this.addAttrs( elt, attrs );
     if ( this.exists( text )  ) this.text( elt, text );
 

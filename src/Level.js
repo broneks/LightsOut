@@ -2,12 +2,14 @@ define(['util', 'nodes', 'levels', 'Cell', 'Controls'], function( util, nodes, l
   'use strict';
 
   function Level() {
-    this.number = null;
-    this.size   = null;
-    this.cells  = [];
-    this.grid   = [];
-    this.controls  = new Controls( this );
+    this.number    = null;
+    this.size      = null;
+    this.blueprint = null;
+    this.minMoves  = null;
+    this.cells     = [];
+    this.grid      = [];
     this.completed = false;
+    this.controls  = new Controls( this );
   }
 
   Level.prototype = {};
@@ -16,6 +18,7 @@ define(['util', 'nodes', 'levels', 'Cell', 'Controls'], function( util, nodes, l
   Level.prototype.getCells = function() {
     return this.cells;
   };
+
 
   //
   // create a grid to reference the state of each cell
@@ -27,6 +30,7 @@ define(['util', 'nodes', 'levels', 'Cell', 'Controls'], function( util, nodes, l
       });
     });
   };
+
 
   //
   // create DOM elements based on the blueprint of the level and generate an array of cell instances
@@ -61,22 +65,31 @@ define(['util', 'nodes', 'levels', 'Cell', 'Controls'], function( util, nodes, l
   // render the level's blueprint and handle any errors
   //
   Level.prototype.render = function( index ) {
-    var blueprint = levels[index];
+    var level;
 
-    if ( !nodes.main      ) throw new Error( '#main-container element was not found' );
-    if ( !nodes.levelName ) throw new Error( '#level-name element was not found' );
-    
-    if ( !util.exists( blueprint ) ) {
-      index     = 0;
-      blueprint = levels[index];
+    // if the current level number is not the same as the index passed in
+    // or a blueprint for the level does not already exist
+    if ( ( this.number !== index ) || util.notExists( this.blueprint ) ) {
+      level = levels[index];
+
+      if ( !nodes.main      ) throw new Error( '#main-container element was not found' );
+      if ( !nodes.levelName ) throw new Error( '#level-name element was not found' );
+      
+      if ( util.notExists( level ) ) {
+        index = 0;
+        level = levels[index];
+      }
+
+      this.number    = index;
+      this.size      = level.blueprint.length;
+      this.blueprint = level.blueprint;
+      this.minMoves  = levels[index].minMoves;
+
+      // display the level number
+      util.text( nodes.levelName, 'Level ' + ( this.number + 1 ), true ); 
     }
 
-    this.number = index;
-    this.size   = blueprint.length;
-
-    this.visualizeBlueprint( blueprint );
-
-    util.text( nodes.levelName, 'Level ' + ( this.number + 1 ), true ); 
+    this.visualizeBlueprint( this.blueprint );
   };
 
 
@@ -86,6 +99,8 @@ define(['util', 'nodes', 'levels', 'Cell', 'Controls'], function( util, nodes, l
   Level.prototype.update = function() {
     this.generateGrid();
     this.isCompleted();
+
+    if ( this.completed ) this.controls.updateScore();
   };
 
 
