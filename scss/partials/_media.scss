@@ -9,6 +9,7 @@
   $mobile-margin       : 3%;
   $mobile-game-padding : 2%;
   $mobile-cell-padding : 1%;
+  $mobile-cell-width   : ( $size * ( $rows * 0.1 ) ) * 1px;
   $mobile-inner-size   : 100% / $rows;
   $mobile-inner-border : 1px solid #fff;
   
@@ -54,7 +55,7 @@
 
     .grid-cell {
       height: 0;
-      width: 100px;
+      width: $mobile-cell-width;
       padding: 0 0 $mobile-inner-size;
 
       &:not(:first-child) {
