@@ -53,14 +53,19 @@ define(['settings', 'util', 'nodes'], function( settings, util, nodes ) {
 
 
   //
+  // reset counter to zero
+  //
+  Controls.prototype.resetCounter = function() {
+    this.moves = 0;
+    this.updateCounter();
+  };
+
+
+  //
   // incremenet the counter
   //
-  Controls.prototype.countMoves = function( reset ) {
-    if ( reset )
-      this.moves = 0;
-    else
-      this.moves += 1;
-    
+  Controls.prototype.countMoves = function() {
+    this.moves += 1;
     this.updateCounter();
   };
 
@@ -71,9 +76,9 @@ define(['settings', 'util', 'nodes'], function( settings, util, nodes ) {
   Controls.prototype.reset = function() {
     if ( ( this.moves === 0 ) || this.level.completed ) return;
 
-    this.moves = 0;
-    this.updateCounter();
+    this.resetCounter();
     this.level.reset();
+    this.level.render( this.level.number );
   };
 
 

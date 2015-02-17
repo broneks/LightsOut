@@ -140,7 +140,7 @@ define(['settings', 'util', 'nodes', 'levels', 'Cell', 'Controls'], function( se
   //
   // reset the level by deleting the rows and cells from the DOM and re-creating them
   //
-  Level.prototype.reset = function( skipRender ) {
+  Level.prototype.reset = function() {
     var rows = util.getByClass( nodes.rowClass, true );
 
     this.cells.forEach(function( row ) {
@@ -155,11 +155,6 @@ define(['settings', 'util', 'nodes', 'levels', 'Cell', 'Controls'], function( se
 
     this.cells = [];
     this.grid  = [];
-
-    // don't re-render the same level
-    if ( skipRender ) return;
-
-    this.render( this.number );
   };
 
 
@@ -167,11 +162,8 @@ define(['settings', 'util', 'nodes', 'levels', 'Cell', 'Controls'], function( se
   // advance to the next level
   //
   Level.prototype.advanceLevel = function() {    
-    // clear the grid
-    this.reset( true );
-
-    // zero-out moves counter
-    this.controls.countMoves( true );
+    this.reset();
+    this.controls.resetCounter();
 
     this.size      = null;
     this.blueprint = null;
