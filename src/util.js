@@ -59,6 +59,14 @@ define(function() {
 
 
   //
+  // basic set timeout wrapper
+  //
+  util.timeout = function( callback, time, self ) {
+    window.setTimeout( callback.bind( self ), time );
+  };
+
+
+  //
   // add an attribute and its value to an element
   //
   util.addAttrs = function( node, attrs ) {

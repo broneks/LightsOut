@@ -4,6 +4,6 @@ require(['Level'], function( Level ) {
   var level = new Level();
 
   // start the game!
-  level.render( 1 );
+  level.render( 0 );
 
 });

@@ -1,19 +1,15 @@
-define(['util', 'nodes'], function( util, nodes ) {
+define(['settings', 'util', 'nodes'], function( settings, util, nodes ) {
   'use strict';
 
   function Controls( level ) {
-    var resetButtonClasses = ['reset-game', 'btn', 'btn-alpha'];
-    var resetButton        = util.elt( 'button', resetButtonClasses, null, 'Reset' );
+    var resetButtonClasses = [nodes.resetButtonClass, nodes.btnClass, nodes.btnAlphaClass];
+    var resetButton        = util.elt( 'button', resetButtonClasses, null, settings.resetButtonLabel );
     
     resetButton.addEventListener( 'click', this.reset.bind( this ), false );
 
     util.append( nodes.controlsButtons, resetButton );
 
     this.level        = level;
-    this.maxPoints    = 1150;
-    this.minPoints    = 100;
-    this.modifier     = 11;
-
     this.score        = 0;
     this.moves        = 0;
     this.counterNode  = nodes.counter;
@@ -36,12 +32,15 @@ define(['util', 'nodes'], function( util, nodes ) {
   // calculate points after level is completed
   //
   Controls.prototype.updateScore = function() {
-    if ( this.moves <= this.level.minMoves )
-      this.score += this.maxPoints;
-    else
-      this.score += util.greaterNumber( ( this.maxPoints - this.moves * this.modifier ), this.minPoints );
+    if ( this.level.completed ) {
+      
+      if ( this.moves <= this.level.minMoves )
+        this.score += settings.maxPoints;
+      else
+        this.score += util.greaterNumber( ( settings.maxPoints - this.moves * settings.pointsModifier ), settings.minPoints );
 
-    this.displayScore();
+      this.displayScore();
+    }
   };
 
 
@@ -56,8 +55,12 @@ define(['util', 'nodes'], function( util, nodes ) {
   //
   // incremenet the counter
   //
-  Controls.prototype.countMoves = function() {
-    this.moves += 1;
+  Controls.prototype.countMoves = function( reset ) {
+    if ( reset )
+      this.moves = 0;
+    else
+      this.moves += 1;
+    
     this.updateCounter();
   };
 
@@ -72,6 +75,7 @@ define(['util', 'nodes'], function( util, nodes ) {
     this.updateCounter();
     this.level.reset();
   };
+
 
   return Controls;
 });

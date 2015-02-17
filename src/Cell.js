@@ -109,5 +109,6 @@ define(['util', 'nodes'], function( util, nodes ) {
     this.cellNode = null;
   };
 
+
   return Cell;
 });

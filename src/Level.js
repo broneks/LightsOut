@@ -1,4 +1,4 @@
-define(['util', 'nodes', 'levels', 'Cell', 'Controls'], function( util, nodes, levels, Cell, Controls ) {
+define(['settings', 'util', 'nodes', 'levels', 'Cell', 'Controls'], function( settings, util, nodes, levels, Cell, Controls ) {
   'use strict';
 
   function Level() {
@@ -69,24 +69,31 @@ define(['util', 'nodes', 'levels', 'Cell', 'Controls'], function( util, nodes, l
 
     // if the current level number is not the same as the index passed in
     // or a blueprint for the level does not already exist
-    if ( ( this.number !== index ) || util.notExists( this.blueprint ) ) {
+    if ( ( this.number !== index ) && util.notExists( this.blueprint ) ) {
       level = levels[index];
 
       if ( !nodes.main      ) throw new Error( '#main-container element was not found' );
       if ( !nodes.levelName ) throw new Error( '#level-name element was not found' );
       
       if ( util.notExists( level ) ) {
-        index = 0;
-        level = levels[index];
+        //
+        // TEMPORARY
+        //
+        util.text( nodes.levelName, 'To Be Continued...', true );
+        return;
+        
+        // index = 0;
+        // level = levels[index];
       }
 
       this.number    = index;
       this.size      = level.blueprint.length;
       this.blueprint = level.blueprint;
       this.minMoves  = levels[index].minMoves;
+      this.completed = false;
 
       // display the level number
-      util.text( nodes.levelName, 'Level ' + ( this.number + 1 ), true ); 
+      util.text( nodes.levelName, settings.levelNameLabel + ' ' + ( this.number + 1 ), true ); 
     }
 
     this.visualizeBlueprint( this.blueprint );
@@ -100,7 +107,10 @@ define(['util', 'nodes', 'levels', 'Cell', 'Controls'], function( util, nodes, l
     this.generateGrid();
     this.isCompleted();
 
-    if ( this.completed ) this.controls.updateScore();
+    if ( this.completed ) {
+      this.controls.updateScore();
+      util.timeout( this.advanceLevel, settings.advanceLevelDelay, this );
+    }
   };
 
 
@@ -130,9 +140,7 @@ define(['util', 'nodes', 'levels', 'Cell', 'Controls'], function( util, nodes, l
   //
   // reset the level by deleting the rows and cells from the DOM and re-creating them
   //
-  Level.prototype.reset = function() {
-    if ( this.completed ) return;
-
+  Level.prototype.reset = function( skipRender ) {
     var rows = util.getByClass( nodes.rowClass, true );
 
     this.cells.forEach(function( row ) {
@@ -148,7 +156,28 @@ define(['util', 'nodes', 'levels', 'Cell', 'Controls'], function( util, nodes, l
     this.cells = [];
     this.grid  = [];
 
+    // don't re-render the same level
+    if ( skipRender ) return;
+
     this.render( this.number );
+  };
+
+
+  //
+  // advance to the next level
+  //
+  Level.prototype.advanceLevel = function() {    
+    // clear the grid
+    this.reset( true );
+
+    // zero-out moves counter
+    this.controls.countMoves( true );
+
+    this.size      = null;
+    this.blueprint = null;
+    this.minMoves  = null;
+
+    this.render( this.number + 1 );
   };
 
 

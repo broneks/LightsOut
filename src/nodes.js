@@ -8,6 +8,8 @@ define({
   rowClass        : 'grid-row',
   cellClass       : 'grid-cell',
   lightCellClass  : 'light-cell',
+  resetButtonClas : 'reset-game',
+  btnClass        : 'btn',
   btnAlphaClass   : 'btn-alpha',
   btnBetaClass    : 'btn-beta'
 });
