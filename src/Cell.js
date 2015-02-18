@@ -3,6 +3,8 @@ define(['util', 'nodes'], function( util, nodes ) {
   
   function Cell( level, controls, state, position ) {
 
+    var self = this;
+
     //
     // create a new DOM element and attach a click eventListener
     //
@@ -10,10 +12,10 @@ define(['util', 'nodes'], function( util, nodes ) {
       var cellClasses = ( state !== 0 ) ? [nodes.cellClass, nodes.lightCellClass] : nodes.cellClass;
       var cellNode    = util.elt( 'div', cellClasses );
 
-      cellNode.addEventListener( 'click', this.click.bind( this ), false );
+      cellNode.addEventListener( 'click', self.click.bind( self ), false );
 
       return cellNode;
-    }.bind( this );
+    };
 
     this.level    = level;
     this.controls = controls;
@@ -28,7 +30,7 @@ define(['util', 'nodes'], function( util, nodes ) {
 
 
   //
-  // get cell's corresponding DOM element
+  // get the cell's corresponding DOM element
   //
   Cell.prototype.getCellNode = function() {
     return this.cellNode;
@@ -36,7 +38,7 @@ define(['util', 'nodes'], function( util, nodes ) {
 
 
   //
-  // detect the Cell instances positioned above, below, to the right and to the left of the Cell that was clicked on
+  // detect the cell instances positioned above, below, to the right and to the left of the cell that was clicked on
   //
   Cell.prototype.detectSurroundingCells = function() {
     var surrounding = [];
@@ -62,7 +64,7 @@ define(['util', 'nodes'], function( util, nodes ) {
 
 
   //
-  // update the state of the Cell once it has been clicked on or triggered
+  // update the state of the cell once it has been clicked on or triggered
   //
   Cell.prototype.updateState = function( ) {
     this.state = !this.state;
@@ -75,7 +77,7 @@ define(['util', 'nodes'], function( util, nodes ) {
 
 
   //
-  // click event that updates cell state, level completion state and move counter
+  // click event that updates cell state, level completion state and the move counter
   //
   Cell.prototype.click = function() {
     if ( this.level.completed ) return;

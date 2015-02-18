@@ -37,6 +37,14 @@ $blue    : #2c3e50 #bdc3c7;
 
 
   //
+  // Points Screen
+  //
+  #points-screen {
+    background-color: transparentize( lighten( $light, 25% ), 0.3 );
+  }
+
+
+  //
   // Controls 
   //
   #game-controls {

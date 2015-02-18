@@ -66,6 +66,21 @@
 
 
   //
+  // Points Screen
+  //
+  #points-screen {
+    h2 {
+      font-size: 18px;
+    }
+
+    #points-earned-label,
+    #moves-made-label {
+      width: 43%;
+    }
+  }
+
+
+  //
   // Controls
   //
   #game-controls {

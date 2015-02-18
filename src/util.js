@@ -59,10 +59,16 @@ define(function() {
 
 
   //
-  // basic set timeout wrapper
+  // curried set timeout wrapper
   //
   util.timeout = function( callback, time, self ) {
-    window.setTimeout( callback.bind( self ), time );
+    return function() {
+      var args = arguments;
+
+      window.setTimeout( function() {
+        callback.apply( self, args );
+      }, time );
+    };
   };
 
 

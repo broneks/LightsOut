@@ -15,6 +15,10 @@ define(['settings', 'util', 'nodes', 'levels', 'Cell', 'Controls'], function( se
   Level.prototype = {};
   Level.prototype.constructor = Level;
 
+
+  //
+  // get the level's array of Cell instances
+  //
   Level.prototype.getCells = function() {
     return this.cells;
   };
@@ -33,7 +37,7 @@ define(['settings', 'util', 'nodes', 'levels', 'Cell', 'Controls'], function( se
 
 
   //
-  // create DOM elements based on the blueprint of the level and generate an array of cell instances
+  // create DOM elements based on the blueprint of the level and generate an array of Cell instances
   //
   Level.prototype.visualizeBlueprint = function( blueprint ) {
     var self = this;
@@ -107,38 +111,36 @@ define(['settings', 'util', 'nodes', 'levels', 'Cell', 'Controls'], function( se
     this.generateGrid();
     this.isCompleted();
 
-    if ( this.completed ) {
-      this.controls.updateScore();
-      util.timeout( this.advanceLevel, settings.advanceLevelDelay, this );
-    }
+    if ( this.completed )
+      util.timeout( this.advanceLevel, settings.advanceLevelDelay, this )();
   };
 
 
   //
-  // check if the current level has been completed by checking the sum of all the cell states
+  // check if the current level has been completed by calculating the sum of all the cell states
   //
   Level.prototype.isCompleted = function() {
     var grid = util.cloneArray( this.grid );
 
     // flatten the rows of the grid
-    var flattened = grid.reduce(function( a, b ) {
+    var flattenedGrid = grid.reduce(function( a, b ) {
       return a.concat(b);
     });
 
-    // add up all of the states of the cells ( light = 1, dark = 0 )
-    var sumOfStates  = flattened.reduce(function( a, b ) {
+    // add up all of the states of the cells ( on = 1, off = 0 )
+    var sumOfStates  = flattenedGrid.reduce(function( a, b ) {
       return a + b; 
     });
 
     // console.log( sumOfStates );
 
-    // the level is complete if the sum of the cell states is zero
+    // the level is complete if the sum of the cell states is equal to zero
     this.completed = sumOfStates === 0;
   };
 
 
   //
-  // reset the level by deleting the rows and cells from the DOM and re-creating them
+  // reset the level by deleting the rows and cells from the DOM
   //
   Level.prototype.reset = function() {
     var rows = util.getByClass( nodes.rowClass, true );
@@ -159,17 +161,25 @@ define(['settings', 'util', 'nodes', 'levels', 'Cell', 'Controls'], function( se
 
 
   //
-  // advance to the next level
+  // show points screen, reset and advance to the next level
   //
-  Level.prototype.advanceLevel = function() {    
-    this.reset();
-    this.controls.resetCounter();
+  Level.prototype.advanceLevel = function() {
+    var self = this;
 
-    this.size      = null;
-    this.blueprint = null;
-    this.minMoves  = null;
+    var advance = function() {
+      self.reset();
 
-    this.render( this.number + 1 );
+      self.size      = null;
+      self.blueprint = null;
+      self.minMoves  = null;
+
+      self.render( self.number + 1 );
+    };
+
+    this.controls.showPointsScreen();
+    
+    // delay the level advancement by however long the points screen is supposed to show
+    util.timeout( advance, settings.pointsScreenDelay )();
   };
 
 

@@ -19,6 +19,7 @@ $extra-space : ( $size / 10 ) * 1px;
 $game-vertical-margin : ( $size / 25 ) * 1px;
 $game-padding-sides   : 7px;
 $game-border-width    : 1px;
+$game-padding         : $game-padding-sides $game-padding-sides ( $game-padding-sides + 2px );
 
 
 // common
@@ -36,5 +37,6 @@ $mobile-game-border-width : 1px;
 
 @import 'partials/global';
 @import 'partials/container';
+@import 'partials/points-screen';
 @import 'partials/controls';
 @import 'partials/media';

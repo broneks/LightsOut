@@ -2,8 +2,6 @@
 // Container
 //
 
-$game-padding : 7px $game-padding-sides 9px;
-
 $inner-border : 2px solid #fff;
 $cell-padding : 5px;
 
@@ -13,6 +11,7 @@ $cell-padding : 5px;
   margin: $game-vertical-margin auto;
   padding: $game-padding;
   border-radius: $border-radius;
+  position: relative;
 
   * {
     box-sizing: border-box;

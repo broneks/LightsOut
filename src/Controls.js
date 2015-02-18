@@ -12,7 +12,7 @@ define(['settings', 'util', 'nodes'], function( settings, util, nodes ) {
     this.level        = level;
     this.score        = 0;
     this.moves        = 0;
-    this.counterNode  = nodes.counter;
+    this.movesNode    = nodes.moves;
     this.controlsNode = nodes.controls;
   }
 
@@ -29,44 +29,84 @@ define(['settings', 'util', 'nodes'], function( settings, util, nodes ) {
 
 
   //
-  // calculate points after level is completed
+  // calculate points after level is completed and return how many points were earned
   //
   Controls.prototype.updateScore = function() {
+    var pointsEarned;
+
     if ( this.level.completed ) {
       
       if ( this.moves <= this.level.minMoves )
-        this.score += settings.maxPoints;
+        pointsEarned = settings.maxPoints;
       else
-        this.score += util.greaterNumber( ( settings.maxPoints - this.moves * settings.pointsModifier ), settings.minPoints );
+        pointsEarned = util.greaterNumber( ( settings.maxPoints - this.moves * settings.pointsModifier ), settings.minPoints );
 
+      // increase score
+      this.score += pointsEarned;
       this.displayScore();
     }
+
+    return pointsEarned;
   };
 
 
   //
-  // update the counter element with a new value
+  // update the moves element with a new value
   //
-  Controls.prototype.updateCounter = function() {
-    util.text( this.counterNode, this.moves, true );
+  Controls.prototype.updateMoves = function() {
+    util.text( this.movesNode, this.moves, true );
   };
 
 
   //
-  // reset counter to zero
+  // reset moves to zero
   //
-  Controls.prototype.resetCounter = function() {
+  Controls.prototype.resetMoves = function() {
     this.moves = 0;
-    this.updateCounter();
+    this.updateMoves();
   };
 
 
   //
-  // incremenet the counter
+  // incremenet the moves
   //
   Controls.prototype.countMoves = function() {
     this.moves += 1;
-    this.updateCounter();
+    this.updateMoves();
+  };
+
+
+  //
+  // show points screen
+  //
+  Controls.prototype.showPointsScreen = function() {
+    var points = this.updateScore();
+    var moves  = this.moves;
+
+    this.resetMoves();
+
+    // show level stats
+    util.text( nodes.pointsEarned, points, true );
+    util.text( nodes.movesMade, moves, true );
+
+    // show the points screen
+    util.addClass( nodes.pointsScreen, 'show' );
+
+    // hide the points screen after some delay
+    util.timeout( this.hidePointsScreen, settings.pointsScreenDelay, this )();
+  };
+
+
+  //
+  // hide points screen
+  //
+  Controls.prototype.hidePointsScreen = function() {
+    // clear level stats
+    util.text( nodes.pointsEarned, '', true );
+    util.text( nodes.movesMade,'', true );
+
+
+    util.removeClass( nodes.pointsScreen, 'show' );
   };
 
 
@@ -76,7 +116,7 @@ define(['settings', 'util', 'nodes'], function( settings, util, nodes ) {
   Controls.prototype.reset = function() {
     if ( ( this.moves === 0 ) || this.level.completed ) return;
 
-    this.resetCounter();
+    this.resetMoves();
     this.level.reset();
     this.level.render( this.level.number );
   };
