@@ -2,6 +2,8 @@
 // Controls
 //
 
+$muted: #727272;
+
 @mixin controls-width() {
   width: $outer-size + ( $game-padding-sides * 2 ) + ( $game-border-width * 2 );
   margin: 0 auto;
@@ -31,4 +33,26 @@
   width: 50%;
   float: left;
   margin: 0;
+}
+
+#controls-buttons {
+  @include clearfix;
+
+  #options-toggle-wrapper {
+    float: right;
+    width: 40%;
+    text-align: right;
+
+    #options-toggle {
+      display: inline-block;
+      color: $muted;
+      padding: ( $btn-padding-top * 2 ) 0 0;
+    }
+  }
+}
+
+#options {
+  margin-top: 15px;
+  padding-top: 5px;
+  border-top: 1px solid $muted;
 }

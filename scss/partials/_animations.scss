@@ -1,0 +1,67 @@
+//
+// Keyframe Animations
+//
+
+// spin
+//
+@-moz-keyframes spin { 
+  100% { -moz-transform: rotate( 360deg );  } 
+}
+@-webkit-keyframes spin { 
+  100% { -webkit-transform: rotate( 360deg );  } 
+}
+@keyframes spin { 
+  100% { transform: rotate( 360deg );  } 
+}
+
+// slide
+//
+@-moz-keyframes slide { 
+  100% { left: 48%; } 
+}
+@-webkit-keyframes slide { 
+  100% { left: 48%; }
+}
+@keyframes slide { 
+  100% { left: 48%; }
+}
+
+
+// disappear
+//
+/*
+@-webkit-keyframes disappear {
+  0% {
+    opacity: 1;
+    -webkit-transform: scale(1);
+    transform: scale(1);
+  }
+  100% {
+    opacity: 0;
+    -webkit-transform: scale(0);
+    transform: scale(0);
+  } 
+}
+@-moz-keyframes disappear {
+  0% {
+    opacity: 1;
+    -moz-transform: scale(1);
+    transform: scale(1);
+  }
+  100% {
+    opacity: 0;
+    -moz-transform: scale(0);
+    transform: scale(0); 
+  }
+}
+@keyframes disappear {
+  0% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  100% {
+    opacity: 0;
+    transform: scale(0); 
+  }
+}
+*/

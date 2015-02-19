@@ -16,6 +16,11 @@ body {
   padding: 20px 0 0;
 }
 
+a {
+  text-decoration: none;
+  outline: none;
+}
+
 .wrapper {
   width: ( $size * 1px ) + $extra-space;
   margin: 0 auto;
@@ -23,12 +28,13 @@ body {
 }
 
 .btn {
-  padding: 7px 25px;
+  padding: $btn-padding-top $btn-padding-sides;
   border: 0;
   border-radius: $border-radius;
   font-weight: bold;
 }
 
-.btn-alpha {
+.btn-alpha,
+.btn-beta {
   color: #fff;
 }

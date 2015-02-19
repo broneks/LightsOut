@@ -9,6 +9,7 @@
 
   <link rel="stylesheet" href="lib/normalize.css/normalize.css">
   <link href='http://fonts.googleapis.com/css?family=Play:400,700' rel='stylesheet' type='text/css'>
+  <link rel="stylesheet" href="lib/font-awesome-bower/css/font-awesome.css">
   <link rel="stylesheet" href="css/main.css">
 </head>
 <body class="green-theme">
@@ -19,30 +20,43 @@
     <div id="game-container">
       <div id="points-screen">
         <h2 id="points-earned-wrapper">
-          <span id="points-earned-label">Points Earned: </span>
+          <span id="points-earned-label" class="game-label">Points Earned: </span>
           <span id="points-earned"></span>
         </h2>
 
         <h2 id="moves-made-wrapper">
-          <span id="moves-made-label">Moves Made: </span>
+          <span id="moves-made-label" class="game-label">Moves Made: </span>
           <span id="moves-made"></span>
         </h2>
+
+        <div id="smiley">
+          <i class="fa fa-smile-o fa-lg"></i>
+        </div>
       </div>
     </div>
 
     <div id="game-controls">
       <div id="moves-and-score">
         <h3 id="moves-wrapper">
-          <span id="moves-label">Moves: </span>
+          <span id="moves-label" class="controls-label">Moves: </span>
           <span id="moves">0</span>
         </h3>
 
         <h3 id="score-wrapper">
-          <span id="score-label">Score: </span>  
+          <span id="score-label" class="controls-label">Score: </span>  
           <span id="score">0</span>
         </h3>
       </div>
-      <div id="controls-buttons"></div>
+
+      <div id="controls-buttons">
+        <button id="reset-game" class="btn btn-alpha">Reset</button>
+
+        <div id="options-toggle-wrapper">
+          <a href="#" id="options-toggle">
+            <i class="fa fa-cog fa-md"></i> Options
+          </a>
+        </div>
+      </div>
     </div>
   </div>
 

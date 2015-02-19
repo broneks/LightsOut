@@ -10,6 +10,7 @@
     "tests"
   ],
   "dependencies": {
-    "normalize.css": "~3.0.2"
+    "normalize.css": "~3.0.2",
+    "font-awesome-bower": "~4.3.0"
   }
 }

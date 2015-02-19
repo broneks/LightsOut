@@ -2,6 +2,8 @@
 // Points Screen
 //
 
+@import 'partials/animations';
+
 #points-screen {
   display: block;
   visibility: hidden;
@@ -16,16 +18,28 @@
   @include clearfix;
   @include transform( translateY( -50% ) );
 
-  &.show {
-    visibility: visible;
-    opacity: 1;
-    @include transition( all 0.3s ease );
-  }
-
   #points-earned-label,
   #moves-made-label {
     display: inline-block;
     width: 45%;
     white-space: nowrap;
+  }
+
+  #smiley .fa {
+    left: 0;
+    position: relative;
+    border-radius: 50%;
+  }
+
+  &.show {
+    visibility: visible;
+    opacity: 1;
+
+    @include transition( opacity 0.3s ease );
+
+    #smiley .fa { 
+      @include animation( spin ( $pointsScreenDelay / 2.75 ) linear, slide ( $pointsScreenDelay / 2.75 ) linear );
+      @include animation-fill-mode( forwards );
+    }
   }
 }

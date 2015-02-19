@@ -2,18 +2,11 @@ define(['settings', 'util', 'nodes'], function( settings, util, nodes ) {
   'use strict';
 
   function Controls( level ) {
-    var resetButtonClasses = [nodes.resetButtonClass, nodes.btnClass, nodes.btnAlphaClass];
-    var resetButton        = util.elt( 'button', resetButtonClasses, null, settings.resetButtonLabel );
-    
-    resetButton.addEventListener( 'click', this.reset.bind( this ), false );
+    nodes.resetButton.addEventListener( 'click', this.reset.bind( this ), false );
 
-    util.append( nodes.controlsButtons, resetButton );
-
-    this.level        = level;
-    this.score        = 0;
-    this.moves        = 0;
-    this.movesNode    = nodes.moves;
-    this.controlsNode = nodes.controls;
+    this.level = level;
+    this.score = 0;
+    this.moves = 0;
   }
 
   Controls.prototype = {};
@@ -54,7 +47,7 @@ define(['settings', 'util', 'nodes'], function( settings, util, nodes ) {
   // update the moves element with a new value
   //
   Controls.prototype.updateMoves = function() {
-    util.text( this.movesNode, this.moves, true );
+    util.text( nodes.moves, this.moves, true );
   };
 
 

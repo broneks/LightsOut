@@ -15,11 +15,19 @@ $inner-size  : ( $size / $rows ) * 1px;
 $extra-space : ( $size / 10 ) * 1px;
 
 
+// animation
+$pointsScreenDelay : 1500ms;
+
+
 // spacing
 $game-vertical-margin : ( $size / 25 ) * 1px;
-$game-padding-sides   : 7px;
 $game-border-width    : 1px;
-$game-padding         : $game-padding-sides $game-padding-sides ( $game-padding-sides + 2px );
+$game-padding-sides   : 7px;
+$game-padding-bottom  : $game-padding-sides + 2px;
+$game-padding         : $game-padding-sides $game-padding-sides $game-padding-bottom;
+
+$btn-padding-top   : 7px;
+$btn-padding-sides : 25px;
 
 
 // common
