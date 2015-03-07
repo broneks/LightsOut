@@ -5,4 +5,11 @@ define({
   advanceLevelDelay : 400,
   pointsScreenDelay : 1500,
   levelNameLabel    : 'Level',
+  colourThemes      : {
+    'green' : 'green-theme',
+    'red'   : 'red-theme',
+    'blue'  : 'blue-theme',
+    'black' : 'black-theme'
+  },
+  defaultTheme : 'green'
 });

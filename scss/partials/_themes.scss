@@ -3,7 +3,7 @@
 //
 
 $default : #333 #aaa;
-$red     : #c0392b #95a5a6;
+$red     : #c0392b #bdc3c7;
 $green   : #27ae60 #bdc3c7;
 $blue    : #2c3e50 #bdc3c7;
 
@@ -40,7 +40,7 @@ $blue    : #2c3e50 #bdc3c7;
   // Points Screen
   //
   #points-screen {
-    background-color: transparentize( lighten( $light, 25% ), 0.3 );
+    background-color: transparentize( lighten( $light, 30% ), 0.15 );
   }
 
 

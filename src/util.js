@@ -111,7 +111,10 @@ define(function() {
   //
   // remove classes from an element
   //
-  util.removeClass = function( node, classes ) {
+  util.removeClass = function( node, classes, removeAll ) {
+    if ( removeAll )
+      node.className = '';
+
     if ( Array.isArray( classes ) )
       classes.forEach(function( className ) {
         node.classList.remove( className );
@@ -120,6 +123,21 @@ define(function() {
       node.classList.remove( classes );
 
     return node;
+  };
+
+
+  //
+  //
+  //
+  util.toggleClass = function( node, className ) {
+    if ( node.classList.contains( className ) ) {
+      this.removeClass( node, className );
+      return false;
+    }
+    else {
+      this.addClass( node, className );
+      return true;
+    }
   };
 
 
@@ -168,6 +186,16 @@ define(function() {
   //
   util.remove = function( parent, child ) {
     parent.removeChild( child );
+  };
+
+
+  //
+  // add event listener with context
+  //
+  util.addEvent = function( node, eventType, callback, useCapture, context ) {
+    var fn = context ? callback.bind( context ) : callback;
+
+    node.addEventListener( eventType, fn, useCapture );
   };
 
 

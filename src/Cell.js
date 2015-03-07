@@ -12,7 +12,7 @@ define(['util', 'nodes'], function( util, nodes ) {
       var cellClasses = ( state !== 0 ) ? [nodes.cellClass, nodes.lightCellClass] : nodes.cellClass;
       var cellNode    = util.elt( 'div', cellClasses );
 
-      cellNode.addEventListener( 'click', self.click.bind( self ), false );
+      util.addEvent( cellNode, 'click', self.click, false, self ); 
 
       return cellNode;
     };
@@ -90,7 +90,7 @@ define(['util', 'nodes'], function( util, nodes ) {
 
     this.updateState();
 
-    this.controls.countMoves();
+    this.controls.closeOptions();
 
     // must be last
     this.level.update();

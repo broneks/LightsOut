@@ -17,6 +17,13 @@ define(['settings', 'util', 'nodes', 'levels', 'Cell', 'Controls'], function( se
 
 
   //
+  // Start the game from the first level
+  //
+  Level.prototype.startGame = function() {
+    this.render( 0 );
+  };
+
+  //
   // get the level's array of Cell instances
   //
   Level.prototype.getCells = function() {
@@ -71,6 +78,8 @@ define(['settings', 'util', 'nodes', 'levels', 'Cell', 'Controls'], function( se
   Level.prototype.render = function( index ) {
     var level;
 
+    this.reset();
+
     // if the current level number is not the same as the index passed in
     // or a blueprint for the level does not already exist
     if ( ( this.number !== index ) && util.notExists( this.blueprint ) ) {
@@ -108,6 +117,8 @@ define(['settings', 'util', 'nodes', 'levels', 'Cell', 'Controls'], function( se
   // update the grid reference so that the completion of the level can be tracked
   //
   Level.prototype.update = function() {
+    this.controls.countMoves();
+
     this.generateGrid();
     this.isCompleted();
 
@@ -167,8 +178,6 @@ define(['settings', 'util', 'nodes', 'levels', 'Cell', 'Controls'], function( se
     var self = this;
 
     var advance = function() {
-      self.reset();
-
       self.size      = null;
       self.blueprint = null;
       self.minMoves  = null;
