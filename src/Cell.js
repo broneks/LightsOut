@@ -90,8 +90,6 @@ define(['util', 'nodes'], function( util, nodes ) {
 
     this.updateState();
 
-    this.controls.closeOptions();
-
     // must be last
     this.level.update();
   };

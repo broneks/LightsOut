@@ -5,15 +5,10 @@ define(['settings', 'util', 'nodes'], function( settings, util, nodes ) {
     var self = this;
 
     util.addEvent( nodes.resetButton, 'click', self.reset, false, self );
-    util.addEvent( nodes.optionsToggle, 'click', self.toggleOptions, false, self );
-    util.addEvent( nodes.themeSelect, 'click', self.changeTheme, false, self );
-
-    this.populateThemeSelect();
 
     this.level = level;
     this.score = 0;
     this.moves = 0;
-    this.optionsState = false;
   }
 
   Controls.prototype = {};
@@ -118,64 +113,6 @@ define(['settings', 'util', 'nodes'], function( settings, util, nodes ) {
 
     this.resetMoves();
     this.level.render( this.level.number );
-  };
-
-
-  //
-  // populate the theme select dropdown
-  //
-  Controls.prototype.populateThemeSelect = function() {
-    var theme;
-    var attrs;
-    var option;
-
-    for ( theme in settings.colourThemes ) {
-
-      attrs = [{ 'value': settings.colourThemes[theme] }];
-
-      // the default theme is inititally selected
-      if ( theme === settings.defaultTheme ) {
-        attrs.push( { 'selected': true } );
-      } 
-
-      option = util.elt( 'option', null, attrs, theme );
-
-      util.append( nodes.themeSelect, option );
-    }
-
-    this.changeTheme();
-  };
-
-
-  //
-  // change the colour scheme of the game
-  //
-  Controls.prototype.changeTheme = function( e ) {
-    var themeClass = e ? e.target.value : settings.colourThemes[settings.defaultTheme];
-
-    util.removeClass( nodes.body, null, true );
-    util.addClass( nodes.body, themeClass );
-  };
-
-
-  //
-  // toggle options view
-  //
-  Controls.prototype.toggleOptions = function( e ) {
-    e.preventDefault();
-    e.stopPropagation();
-
-    this.optionsState = util.toggleClass( nodes.options, 'opened' );
-  };
-
-
-  //
-  // close options view
-  //
-  Controls.prototype.closeOptions = function() {
-    if ( this.optionsState ) {
-      util.removeClass( nodes.options, 'opened' );
-    }
   };
 
 

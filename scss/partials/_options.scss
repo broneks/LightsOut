@@ -1,0 +1,39 @@
+//
+// Options
+//
+
+#options {
+  height: 0;
+  margin: 0;
+  padding: 0;
+  border-top: 0;
+  overflow: hidden;
+
+  & > * {
+    visibility: hidden;
+  }
+
+  @include clearfix;
+  @include transition( all 0.3s ease );
+
+  &.opened {
+    height: auto;
+    margin-top: 15px;
+    padding-top: 15px;
+    border-top: 1px solid $muted;
+
+    & > * {
+      visibility: visible;
+    }
+  }
+}
+
+#theme-select {
+  min-width: 30%;
+  padding: 1% 0.5%;
+}
+
+#toggle-points-screen {
+  position: absolute;
+  visibility: hidden;
+}

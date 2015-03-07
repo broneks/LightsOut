@@ -32,6 +32,7 @@ $btn-padding-sides : 25px;
 
 // common
 $border-radius : 3px;
+$muted         : #626262;
 
 
 // mobile 
@@ -47,4 +48,5 @@ $mobile-game-border-width : 1px;
 @import 'partials/container';
 @import 'partials/points-screen';
 @import 'partials/controls';
+@import 'partials/options';
 @import 'partials/media';

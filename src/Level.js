@@ -1,4 +1,4 @@
-define(['settings', 'util', 'nodes', 'levels', 'Cell', 'Controls'], function( settings, util, nodes, levels, Cell, Controls ) {
+define(['settings', 'util', 'nodes', 'levels', 'Cell', 'Controls', 'Options'], function( settings, util, nodes, levels, Cell, Controls, Options ) {
   'use strict';
 
   function Level() {
@@ -10,6 +10,7 @@ define(['settings', 'util', 'nodes', 'levels', 'Cell', 'Controls'], function( se
     this.grid      = [];
     this.completed = false;
     this.controls  = new Controls( this );
+    this.options   = new Options( this );
   }
 
   Level.prototype = {};
@@ -118,6 +119,8 @@ define(['settings', 'util', 'nodes', 'levels', 'Cell', 'Controls'], function( se
   //
   Level.prototype.update = function() {
     this.controls.countMoves();
+    
+    this.options.closeOptions();
 
     this.generateGrid();
     this.isCompleted();
@@ -185,10 +188,16 @@ define(['settings', 'util', 'nodes', 'levels', 'Cell', 'Controls'], function( se
       self.render( self.number + 1 );
     };
 
-    this.controls.showPointsScreen();
-    
-    // delay the level advancement by however long the points screen is supposed to show
-    util.timeout( advance, settings.pointsScreenDelay )();
+    if ( settings.showPointsScreen ) {
+
+      this.controls.showPointsScreen();
+      
+      // delay the level advancement by however long the points screen is supposed to show
+      util.timeout( advance, settings.pointsScreenDelay )();
+    }
+    else {
+      advance();
+    }
   };
 
 

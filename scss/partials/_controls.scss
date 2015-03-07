@@ -2,8 +2,6 @@
 // Controls
 //
 
-$muted: #626262;
-
 @mixin controls-width() {
   width: $outer-size + ( $game-padding-sides * 2 ) + ( $game-border-width * 2 );
   margin: 0 auto;
@@ -49,26 +47,4 @@ $muted: #626262;
       padding: ( $btn-padding-top * 2 ) 0 0;
     }
   }
-}
-
-#options {
-  height: 0;
-  margin: 0;
-  padding: 0;
-  border-top: 0;
-  overflow: hidden;
-
-  @include transition( all 0.3s ease );
-
-  &.opened {
-    height: auto;
-    margin-top: 15px;
-    padding-top: 15px;
-    border-top: 1px solid $muted;
-  }
-}
-
-#theme-select {
-  min-width: 30%;
-  padding: 1% 0.5%;
 }

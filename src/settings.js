@@ -1,10 +1,15 @@
 define({
+  levelNameLabel    : 'Level',
   maxPoints         : 1800,
   minPoints         : 200,
   pointsModifier    : 45,
   advanceLevelDelay : 400,
   pointsScreenDelay : 1500,
-  levelNameLabel    : 'Level',
+  showPointsScreen  : true,
+  togglePointsLabel : {
+    show: 'Show Points Screen',
+    hide: 'Hide Points Screen'
+  },
   colourThemes      : {
     'green' : 'green-theme',
     'red'   : 'red-theme',
