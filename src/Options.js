@@ -7,7 +7,7 @@ define(['settings', 'util', 'nodes'], function( settings, util, nodes ) {
     util.addEvent( nodes.optionsToggle, 'click', self.toggleOptions, false, self );
     util.addEvent( nodes.themeSelect, 'click', self.updateTheme, false, self );
     util.addEvent( nodes.togglePointsScreen, 'click', self.togglePointsScreen, false, self );
-
+    
     this.populateThemeSelect();
     this.setTogglePointsLabel();
 
@@ -81,7 +81,16 @@ define(['settings', 'util', 'nodes'], function( settings, util, nodes ) {
   // set toggle points screen label
   //
   Options.prototype.setTogglePointsLabel = function() {
-    var label = settings.showPointsScreen ? settings.togglePointsLabel.hide : settings.togglePointsLabel.show;
+    var label;
+
+    if ( settings.showPointsScreen ) {
+      label = 'on';
+      util.addClass( nodes.togglePointsLabel, 'active' );
+    }
+    else {
+      label = 'off';
+      util.removeClass( nodes.togglePointsLabel, 'active' );
+    }
 
     util.text( nodes.togglePointsLabel, label, true ); 
   };

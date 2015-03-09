@@ -107,7 +107,7 @@ define(['settings', 'util', 'nodes', 'levels', 'Cell', 'Controls', 'Options'], f
       this.completed = false;
 
       // display the level number
-      util.text( nodes.levelName, settings.levelNameLabel + ' ' + ( this.number + 1 ), true ); 
+      util.text( nodes.levelName, settings.levelNameLabel + ' ' + ( index + 1 ), true ); 
     }
 
     this.visualizeBlueprint( this.blueprint );
@@ -175,7 +175,7 @@ define(['settings', 'util', 'nodes', 'levels', 'Cell', 'Controls', 'Options'], f
 
 
   //
-  // show points screen, reset and advance to the next level
+  // show points screen and advance to the next level
   //
   Level.prototype.advanceLevel = function() {
     var self = this;
@@ -186,16 +186,18 @@ define(['settings', 'util', 'nodes', 'levels', 'Cell', 'Controls', 'Options'], f
       self.minMoves  = null;
 
       self.render( self.number + 1 );
-    };
+    };  
 
-    if ( settings.showPointsScreen ) {
-
+    if ( settings.showPointsScreen  ) {
       this.controls.showPointsScreen();
       
       // delay the level advancement by however long the points screen is supposed to show
-      util.timeout( advance, settings.pointsScreenDelay )();
+      util.timeout( advance, settings.pointsScreenDelay, this )();
     }
     else {
+      this.controls.updateScore();
+      this.controls.resetMoves();
+      
       advance();
     }
   };

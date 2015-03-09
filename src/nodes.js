@@ -14,7 +14,7 @@ define({
   optionsToggle      : document.getElementById( 'options-toggle' ),
   options            : document.getElementById( 'options' ),
   togglePointsScreen : document.getElementById( 'toggle-points-screen' ),
-  togglePointsLabel  : document.getElementById( 'toggle-points-screen-label' ),
+  togglePointsLabel  : document.querySelector( '#toggle-points-screen-label span' ),
   rowClass           : 'grid-row',
   cellClass          : 'grid-cell',
   lightCellClass     : 'light-cell',

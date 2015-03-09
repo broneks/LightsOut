@@ -33,6 +33,7 @@ a {
   border-radius: $border-radius;
   font-weight: bold;
   position: relative;
+  cursor: pointer;
 }
 
 .btn-alpha,
@@ -45,4 +46,12 @@ a {
 }
 .left {
   float: left;
+}
+
+.row {
+  padding: 15px 0;
+
+  & + .row {
+    padding-top: 0;
+  }
 }
