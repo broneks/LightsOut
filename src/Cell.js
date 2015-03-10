@@ -1,7 +1,7 @@
 define(['util', 'nodes'], function( util, nodes ) {
   'use strict';
   
-  function Cell( level, controls, state, position ) {
+  function Cell( level, state, position ) {
 
     var self = this;
 
@@ -18,7 +18,7 @@ define(['util', 'nodes'], function( util, nodes ) {
     };
 
     this.level    = level;
-    this.controls = controls;
+    this.controls = level.controls;
     this.state    = state;
     this.rowPos   = position[0];
     this.cellPos  = position[1];
@@ -44,7 +44,7 @@ define(['util', 'nodes'], function( util, nodes ) {
     var surrounding = [];
 
     var levelSize = this.level.size;
-    var cells     = this.level.getCells();
+    var cells     = this.level.cells;
 
     // check if the surrounding cell is out of bounds before getting its coordinate position
     var above = ( this.rowPos - 1  ) > -1 ? [this.rowPos - 1, this.cellPos] : false;

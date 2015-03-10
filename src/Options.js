@@ -1,4 +1,4 @@
-define(['settings', 'util', 'nodes'], function( settings, util, nodes ) {
+define(['settings', 'util', 'nodes', 'storage'], function( settings, util, nodes, storage ) {
   'use strict';
 
   function Options( level ) {
@@ -7,11 +7,13 @@ define(['settings', 'util', 'nodes'], function( settings, util, nodes ) {
     util.addEvent( nodes.optionsToggle, 'click', self.toggleOptions, false, self );
     util.addEvent( nodes.themeSelect, 'click', self.updateTheme, false, self );
     util.addEvent( nodes.togglePointsScreen, 'click', self.togglePointsScreen, false, self );
+    util.addEvent( nodes.saveButton, 'click', self.saveGame, false, self );
     
     this.populateThemeSelect();
     this.setTogglePointsLabel();
 
-    this.level = level;
+    this.level        = level;
+    this.controls     = level.controls;
     this.optionsState = false;
   }
 
@@ -32,7 +34,7 @@ define(['settings', 'util', 'nodes'], function( settings, util, nodes ) {
       attrs = [{ 'value': settings.colourThemes[theme] }];
 
       // the default theme is inititally selected
-      if ( theme === settings.defaultTheme ) {
+      if ( theme === settings.currentTheme ) {
         attrs.push( { 'selected': true } );
       } 
 
@@ -46,10 +48,15 @@ define(['settings', 'util', 'nodes'], function( settings, util, nodes ) {
 
 
   //
-  // change the colour scheme of the game
+  // change the colour theme of the game
   //
   Options.prototype.updateTheme = function( e ) {
-    var themeClass = e ? e.target.value : settings.colourThemes[settings.defaultTheme];
+    var themeClass = settings.colourThemes[settings.currentTheme];
+
+    if ( e ) {
+      themeClass = e.target.value;
+      settings.currentTheme = util.getKey( settings.colourThemes, e.target.value );
+    }
 
     util.removeClass( nodes.body, null, true );
     util.addClass( nodes.body, themeClass );
@@ -102,6 +109,22 @@ define(['settings', 'util', 'nodes'], function( settings, util, nodes ) {
   Options.prototype.togglePointsScreen = function() {
     settings.showPointsScreen = !settings.showPointsScreen;
     this.setTogglePointsLabel();
+  };
+
+
+  //
+  // save the game
+  //
+  Options.prototype.saveGame = function() {
+    var gameInfo = [
+      settings.currentTheme,
+      settings.showPointsScreen,
+      this.controls.score,
+      this.level.number
+    ].join('|');
+
+    storage.save( gameInfo );
+    console.log( storage.load() );
   };
 
 

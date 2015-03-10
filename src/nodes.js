@@ -13,6 +13,7 @@ define({
   themeSelect        : document.getElementById( 'theme-select' ),
   optionsToggle      : document.getElementById( 'options-toggle' ),
   options            : document.getElementById( 'options' ),
+  saveButton         : document.getElementById( 'save-game' ),
   togglePointsScreen : document.getElementById( 'toggle-points-screen' ),
   togglePointsLabel  : document.querySelector( '#toggle-points-screen-label span' ),
   rowClass           : 'grid-row',

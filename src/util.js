@@ -73,6 +73,21 @@ define(function() {
 
 
   //
+  // get key by value
+  //
+  util.getKey = function( obj, value ) {
+    var key;
+
+    for( key in obj) {
+      if( obj[key] === value )
+        return key;
+    }
+    
+    return null;
+  };
+
+
+  //
   // add an attribute and its value to an element
   //
   util.addAttrs = function( node, attrs ) {

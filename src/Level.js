@@ -24,13 +24,6 @@ define(['settings', 'util', 'nodes', 'levels', 'Cell', 'Controls', 'Options'], f
     this.render( 0 );
   };
 
-  //
-  // get the level's array of Cell instances
-  //
-  Level.prototype.getCells = function() {
-    return this.cells;
-  };
-
 
   //
   // create a grid to reference the state of each cell
@@ -56,7 +49,7 @@ define(['settings', 'util', 'nodes', 'levels', 'Cell', 'Controls', 'Options'], f
 
       rowPlan.forEach(function( cellPlan, cellIndex ) {
         var cellPos  = [rowIndex, cellIndex];
-        var cell     = new Cell( self, self.controls, cellPlan, cellPos );
+        var cell     = new Cell( self, cellPlan, cellPos );
         var cellNode = cell.getCellNode(); 
 
         cellsRow.push( cell );

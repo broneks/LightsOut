@@ -12,5 +12,5 @@ define({
     'blue'  : 'blue-theme',
     'black' : 'black-theme'
   },
-  defaultTheme : 'green'
+  currentTheme : 'green'
 });
