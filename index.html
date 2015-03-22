@@ -60,16 +60,29 @@
 
       <div id="options">
         <div class="row">
-          <select id="theme-select"></select>
+          <span class="options-label">Theme:</span>
 
-          <label for="toggle-points-screen" class="btn btn-beta right">
-            <span id="toggle-points-screen-label">Points Screen <span></span></span>
+          <select id="theme-select"></select>
+        </div>
+
+        <div class="row">
+          <span class="options-label">Points Screen:</span>
+
+          <label for="toggle-points-screen" id="toggle-points-screen-label" class="btn">
+            <span id="toggle-points-screen-state"></span>
             <input type="checkbox" id="toggle-points-screen">
           </label>
         </div>
 
         <div class="row">
-          <button id="save-game" class="btn btn-beta right">Save Game</button>
+          <span class="options-label">Manage Game:</span>
+
+          <button id="save-game" class="btn btn-beta">Save</button>
+          <button id="load-game" class="btn btn-beta">Load</button>
+        </div>
+
+        <div class="row">
+          <span id="last-saved-date" class="options-offset"></span>
         </div>
       </div>
     </div>

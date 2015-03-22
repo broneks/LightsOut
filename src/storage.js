@@ -17,6 +17,8 @@ define(function() {
     obj.d = Date.now();
 
     localStorage.setItem( id, JSON.stringify( obj ) );
+
+    return new Date( obj.d );
   };
 
 
@@ -25,13 +27,17 @@ define(function() {
   //
   storage.load = function() {
     var retrieved = JSON.parse( localStorage.getItem( id ) );
-    var processed = {};
+    var processed;
 
-    processed.info = this.cipher( retrieved.i, retrieved.k );
-    processed.date = new Date( retrieved.d );
+    if ( retrieved ) {
+      processed      = {};
+      processed.info = ( this.cipher( retrieved.i, retrieved.k ) ).split('|');
+      processed.date = new Date( retrieved.d );
+    }
 
     return processed;
   };
+
 
   //
   // clear

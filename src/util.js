@@ -73,6 +73,25 @@ define(function() {
 
 
   //
+  // get formatted date and time
+  //
+  util.getDateAndTime = (function() {
+    var MONTHS = ['Jan', 'Feb', 'March', 'April', 'May', 'June', 'July', 'Aug', 'Sept', 'Oct', 'Nov', 'Dec'];
+
+    return function( date ) {
+      var month   = MONTHS[date.getMonth()];
+      var day     = date.getDate();
+      var hours   = ( date.getHours() < 10 ? '0' : '' ) + date.getHours();
+      var minutes = ( date.getMinutes() < 10 ? '0' : '' ) + date.getMinutes();
+
+      var dateString = month + ' ' + day + ' at ' + hours + ':' + minutes;
+
+      return dateString;
+    };
+  })();
+
+
+  //
   // get key by value
   //
   util.getKey = function( obj, value ) {

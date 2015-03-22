@@ -1,14 +1,25 @@
 define(['settings', 'util', 'nodes', 'storage'], function( settings, util, nodes, storage ) {
   'use strict';
 
+
   function Options( level ) {
-    var self = this;
+    var self   = this;
+    var stored = storage.load();
 
     util.addEvent( nodes.optionsToggle, 'click', self.toggleOptions, false, self );
     util.addEvent( nodes.themeSelect, 'click', self.updateTheme, false, self );
     util.addEvent( nodes.togglePointsScreen, 'click', self.togglePointsScreen, false, self );
     util.addEvent( nodes.saveButton, 'click', self.saveGame, false, self );
-    
+    util.addEvent( nodes.loadButton, 'click', self.loadGame, false, self );
+      
+    // access storage on load
+    if ( stored ) {
+      this.setLastSavedDate( util.getDateAndTime( stored.date ) );
+
+      // display load button
+      util.addClass( nodes.loadButton, 'active' );
+    }
+
     this.populateThemeSelect();
     this.setTogglePointsLabel();
 
@@ -91,15 +102,15 @@ define(['settings', 'util', 'nodes', 'storage'], function( settings, util, nodes
     var label;
 
     if ( settings.showPointsScreen ) {
-      label = 'on';
+      label = 'On';
       util.addClass( nodes.togglePointsLabel, 'active' );
     }
     else {
-      label = 'off';
+      label = 'Off';
       util.removeClass( nodes.togglePointsLabel, 'active' );
     }
 
-    util.text( nodes.togglePointsLabel, label, true ); 
+    util.text( nodes.togglePointsState, label, true ); 
   };
 
 
@@ -116,6 +127,10 @@ define(['settings', 'util', 'nodes', 'storage'], function( settings, util, nodes
   // save the game
   //
   Options.prototype.saveGame = function() {
+
+    // don't save if score is zero
+    if ( !this.controls.score ) return;
+
     var gameInfo = [
       settings.currentTheme,
       settings.showPointsScreen,
@@ -123,8 +138,46 @@ define(['settings', 'util', 'nodes', 'storage'], function( settings, util, nodes
       this.level.number
     ].join('|');
 
-    storage.save( gameInfo );
-    console.log( storage.load() );
+    var dateSaved  = storage.save( gameInfo );
+
+    this.setLastSavedDate( util.getDateAndTime( dateSaved ) );
+
+    // display load button
+    util.addClass( nodes.loadButton, 'active' );
+  };
+
+
+  //
+  // load the game
+  //
+  Options.prototype.loadGame = function() {
+    var stored = storage.load();
+    var loaded = {
+      theme      : stored.info[0],
+      showScreen : stored.info[1],
+      score      : stored.info[2],
+      level      : stored.info[3]
+    };
+
+    // override settings
+    settings.currentTheme     = loaded.theme;
+    settings.showPointsScreen = loaded.showScreen;
+    this.controls.score       = parseInt( loaded.score );
+
+    this.updateTheme();
+    this.setTogglePointsLabel();
+    this.controls.displayScore();
+  };
+
+
+  //
+  // update save date
+  //
+  Options.prototype.setLastSavedDate = function( date ) {
+    var dateString = 'Last Saved: ' + date;
+    
+    if ( util.exists( date ) )
+      util.text( nodes.lastSavedDate, dateString, true );
   };
 
 

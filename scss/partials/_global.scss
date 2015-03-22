@@ -34,6 +34,7 @@ a {
   font-weight: bold;
   position: relative;
   cursor: pointer;
+  outline: none;
 }
 
 .btn-alpha,
@@ -48,8 +49,17 @@ a {
   float: left;
 }
 
+.text-right {
+  text-align: right;
+}
+.text-center {
+  text-align: center;
+}
+
 .row {
   padding: 15px 0;
+
+  @include clearfix;
 
   & + .row {
     padding-top: 0;
