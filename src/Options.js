@@ -14,7 +14,7 @@ define(['settings', 'util', 'nodes', 'storage'], function( settings, util, nodes
       
     // access storage on load
     if ( stored ) {
-      this.setLastSavedDate( util.getDateAndTime( stored.date ) );
+      this.setLastSavedInfo( stored );
 
       // display load button
       util.addClass( nodes.loadButton, 'active' );
@@ -61,16 +61,29 @@ define(['settings', 'util', 'nodes', 'storage'], function( settings, util, nodes
   //
   // change the colour theme of the game
   //
-  Options.prototype.updateTheme = function( e ) {
+  Options.prototype.updateTheme = function( e, changeSelectedIndex ) {
     var themeClass = settings.colourThemes[settings.currentTheme];
+    var eventTargetValue;
+    var currentThemeIndex;
 
-    if ( e ) {
-      themeClass = e.target.value;
-      settings.currentTheme = util.getKey( settings.colourThemes, e.target.value );
+    // very basic event detection
+    if ( e && e.target.tagName) {
+      eventTargetValue = e.target.value;
+      themeClass       = eventTargetValue;
+      settings.currentTheme = util.getKey( settings.colourThemes, eventTargetValue );
     }
 
-    util.removeClass( nodes.body, null, true );
-    util.addClass( nodes.body, themeClass );
+    // update the theme select element
+    if ( changeSelectedIndex ) {
+      // get the index of the current theme within the colourThemes object
+      currentThemeIndex = Object.keys( settings.colourThemes ).indexOf( settings.currentTheme );
+      nodes.themeSelect.selectedIndex = currentThemeIndex;
+    }
+
+    if ( !util.hasClass( nodes.body, themeClass ) ) {
+      util.removeClass( nodes.body, true );
+      util.addClass( nodes.body, themeClass );
+    }
   };
 
 
@@ -101,7 +114,7 @@ define(['settings', 'util', 'nodes', 'storage'], function( settings, util, nodes
   Options.prototype.setTogglePointsLabel = function() {
     var label;
 
-    if ( settings.showPointsScreen ) {
+    if ( settings.showPointsScreen) {
       label = 'On';
       util.addClass( nodes.togglePointsLabel, 'active' );
     }
@@ -136,11 +149,13 @@ define(['settings', 'util', 'nodes', 'storage'], function( settings, util, nodes
       settings.showPointsScreen,
       this.controls.score,
       this.level.number
-    ].join('|');
+    ];
 
-    var dateSaved  = storage.save( gameInfo );
+    var savedInfo = storage.save( gameInfo );
 
-    this.setLastSavedDate( util.getDateAndTime( dateSaved ) );
+    console.log(savedInfo);
+
+    this.setLastSavedInfo( savedInfo );
 
     // display load button
     util.addClass( nodes.loadButton, 'active' );
@@ -151,33 +166,38 @@ define(['settings', 'util', 'nodes', 'storage'], function( settings, util, nodes
   // load the game
   //
   Options.prototype.loadGame = function() {
-    var stored = storage.load();
-    var loaded = {
-      theme      : stored.info[0],
-      showScreen : stored.info[1],
-      score      : stored.info[2],
-      level      : stored.info[3]
-    };
+    var loaded = storage.load();
 
     // override settings
     settings.currentTheme     = loaded.theme;
     settings.showPointsScreen = loaded.showScreen;
-    this.controls.score       = parseInt( loaded.score );
+    this.controls.score       = loaded.score;
 
-    this.updateTheme();
+    // update the theme
+    this.updateTheme( null, true );
+
+    // update toggle points screen label
     this.setTogglePointsLabel();
+
+    // display the loaded score
     this.controls.displayScore();
+
+    // reset the moves counter and load saved level
+    this.level.loadLevel( loaded.level );
   };
 
 
   //
-  // update save date
+  // update save info
   //
-  Options.prototype.setLastSavedDate = function( date ) {
-    var dateString = 'Last Saved: ' + date;
-    
-    if ( util.exists( date ) )
-      util.text( nodes.lastSavedDate, dateString, true );
+  Options.prototype.setLastSavedInfo = function( info ) {
+    if ( util.exists( info.date ) )
+      util.text( nodes.lastSavedDate, util.getDateAndTime( info.date ), true );
+
+    console.log(info.level);
+
+    if ( util.exists( info.level ) )
+      util.text( nodes.lastSavedLevel, settings.levelNameLabel + ' ' + ( info.level + 1 ), true );
   };
 
 

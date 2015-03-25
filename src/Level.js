@@ -72,7 +72,7 @@ define(['settings', 'util', 'nodes', 'levels', 'Cell', 'Controls', 'Options'], f
   Level.prototype.render = function( index ) {
     var level;
 
-    this.reset();
+    this.resetCells();
 
     // if the current level number is not the same as the index passed in
     // or a blueprint for the level does not already exist
@@ -149,7 +149,7 @@ define(['settings', 'util', 'nodes', 'levels', 'Cell', 'Controls', 'Options'], f
   //
   // reset the level by deleting the rows and cells from the DOM
   //
-  Level.prototype.reset = function() {
+  Level.prototype.resetCells = function() {
     var rows = util.getByClass( nodes.rowClass, true );
 
     this.cells.forEach(function( row ) {
@@ -166,6 +166,28 @@ define(['settings', 'util', 'nodes', 'levels', 'Cell', 'Controls', 'Options'], f
     this.grid  = [];
   };
 
+  
+  //
+  // reset the level blueprint and associated details
+  //
+  Level.prototype.resetBlueprint = function() {
+    this.blueprint = null;
+    this.size      = null;
+    this.minMoves  = null;
+  };
+
+
+  //
+  // load level number
+  //
+  Level.prototype.loadLevel = function( number ) {
+    if ( number !== this.number )
+      this.resetBlueprint();
+    
+    this.controls.resetMoves();
+    this.render( number );
+  };
+
 
   //
   // show points screen and advance to the next level
@@ -174,9 +196,7 @@ define(['settings', 'util', 'nodes', 'levels', 'Cell', 'Controls', 'Options'], f
     var self = this;
 
     var advance = function() {
-      self.size      = null;
-      self.blueprint = null;
-      self.minMoves  = null;
+      self.resetBlueprint();
 
       self.render( self.number + 1 );
     };  

@@ -143,10 +143,19 @@ define(function() {
 
 
   //
+  // checks if element has a class
+  //
+  util.hasClass = function( node, className ) {
+    return node.classList.contains( className );
+  };
+
+
+  //
   // remove classes from an element
   //
-  util.removeClass = function( node, classes, removeAll ) {
-    if ( removeAll )
+  util.removeClass = function( node, classes ) {
+    // remove all classes
+    if ( classes === true )
       node.className = '';
 
     if ( Array.isArray( classes ) )

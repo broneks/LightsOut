@@ -7,9 +7,11 @@ define(function() {
   //
   // save
   //
-  storage.save = function( info ) {
-    var obj = {};
-    var k   = Math.random().toString( 36 ).substr( 2, 5 );
+  storage.save = function( gameInfo ) {
+    var obj       = {};
+    var processed = {};
+    var info = gameInfo.join('|');
+    var k    = Math.random().toString( 36 ).substr( 2, 5 );
 
     // game info, key and date saved
     obj.i = this.cipher( info, k );
@@ -18,7 +20,10 @@ define(function() {
 
     localStorage.setItem( id, JSON.stringify( obj ) );
 
-    return new Date( obj.d );
+    processed.date  = new Date( obj.d );
+    processed.level = parseInt( gameInfo[3] );
+
+    return processed;
   };
 
 
@@ -27,12 +32,19 @@ define(function() {
   //
   storage.load = function() {
     var retrieved = JSON.parse( localStorage.getItem( id ) );
+    var rawInfo;
     var processed;
 
     if ( retrieved ) {
-      processed      = {};
-      processed.info = ( this.cipher( retrieved.i, retrieved.k ) ).split('|');
-      processed.date = new Date( retrieved.d );
+      rawInfo = ( this.cipher( retrieved.i, retrieved.k ) ).split('|');
+      
+      processed = {};
+
+      processed.date       = new Date( retrieved.d );
+      processed.theme      = rawInfo[0];
+      processed.showScreen = rawInfo[1] === 'true'; // convert to bool
+      processed.score      = parseInt( rawInfo[2] );
+      processed.level      = parseInt( rawInfo[3] );
     }
 
     return processed;

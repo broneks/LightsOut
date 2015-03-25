@@ -16,6 +16,7 @@ define({
   saveButton         : document.getElementById( 'save-game' ),
   loadButton         : document.getElementById( 'load-game' ),
   lastSavedDate      : document.getElementById( 'last-saved-date' ),
+  lastSavedLevel     : document.getElementById( 'last-saved-level' ),
   togglePointsScreen : document.getElementById( 'toggle-points-screen' ),
   togglePointsLabel  : document.getElementById( 'toggle-points-screen-label' ),
   togglePointsState  : document.getElementById( 'toggle-points-screen-state' ),
