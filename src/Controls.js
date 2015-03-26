@@ -11,7 +11,6 @@ define(['settings', 'util', 'nodes'], function( settings, util, nodes ) {
     this.moves = 0;
   }
 
-  Controls.prototype = {};
   Controls.prototype.constructor = Controls;
 
 

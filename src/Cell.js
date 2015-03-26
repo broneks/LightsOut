@@ -25,7 +25,6 @@ define(['util', 'nodes'], function( util, nodes ) {
     this.cellNode = cellNode();
   }
 
-  Cell.prototype = {};
   Cell.prototype.constructor = Cell;
 
 

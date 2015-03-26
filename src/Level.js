@@ -13,7 +13,6 @@ define(['settings', 'util', 'nodes', 'levels', 'Cell', 'Controls', 'Options'], f
     this.options   = new Options( this );
   }
 
-  Level.prototype = {};
   Level.prototype.constructor = Level;
 
 

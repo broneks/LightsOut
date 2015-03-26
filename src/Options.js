@@ -28,7 +28,6 @@ define(['settings', 'util', 'nodes', 'storage'], function( settings, util, nodes
     this.optionsState = false;
   }
 
-  Options.prototype = {};
   Options.prototype.constructor = Options;
 
 
@@ -125,6 +124,7 @@ define(['settings', 'util', 'nodes', 'storage'], function( settings, util, nodes
 
     util.text( innerNode, label, true ); 
   };
+
 
   //
   // toggle points screen
