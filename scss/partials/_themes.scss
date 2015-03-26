@@ -2,10 +2,12 @@
 // Themes
 //
 
-$default : #333 #aaa;
+$default : #555 #aaa;
 $red     : #c0392b #bdc3c7;
-$green   : #27ae60 #bdc3c7;
+$green   : #00b16a #bdc3c7;
 $blue    : #2c3e50 #bdc3c7;
+$purple  : #9b59b6 #bdc3c7;
+$cats    : 'http://lorempixel.com/76/76/cats/';
 
 
 @mixin colorSet( $colors: $default ) {
@@ -17,11 +19,20 @@ $blue    : #2c3e50 #bdc3c7;
   //
   .btn-alpha {
     background-color: $dark;
+
+    &:hover {
+      background-color: darken( $dark, $hoverDarken );
+    }
   }
   .btn-beta {
     color: #555;
     border: 1px solid;
     border-color: #929292;
+    background: #ddd;
+
+    &:hover {
+      background-color: darken( #ddd, $hoverDarken );
+    }
   }
 
 
@@ -57,6 +68,14 @@ $blue    : #2c3e50 #bdc3c7;
   }
 
 
+  //
+  // Options
+  //
+  #options.opened {
+    border-top: 1px solid $dark;
+  }
+
+
   @media screen and ( max-width: $mobile-width-breakpoint ) {
     
     #game-container,
@@ -86,4 +105,23 @@ body.green-theme {
 // blue theme
 body.blue-theme {
   @include colorSet( $blue );
+}
+
+// purple theme
+body.purple-theme {
+  @include colorSet( $purple );
+}
+
+// cats theme 
+body.cats-theme {
+  #game-container {
+    .grid-cell {
+
+      &.light-cell {
+        background: url( $cats ) no-repeat;
+        background-size: cover;
+        background-color: nth( $default, 2 );
+      }
+    }
+  }
 }

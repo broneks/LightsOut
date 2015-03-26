@@ -4,7 +4,7 @@ define(['settings', 'util', 'nodes', 'storage'], function( settings, util, nodes
 
   function Options( level ) {
     var self   = this;
-    var stored = storage.load();
+    var loaded = storage.load();
 
     util.addEvent( nodes.optionsToggle, 'click', self.toggleOptions, false, self );
     util.addEvent( nodes.themeSelect, 'click', self.updateTheme, false, self );
@@ -13,15 +13,15 @@ define(['settings', 'util', 'nodes', 'storage'], function( settings, util, nodes
     util.addEvent( nodes.loadButton, 'click', self.loadGame, false, self );
       
     // access storage on load
-    if ( stored ) {
-      this.setLastSavedInfo( stored );
+    if ( loaded ) {
+      this.setLastSavedInfo( loaded );
 
-      // display load button
-      util.addClass( nodes.loadButton, 'active' );
+      // display load button and saved label
+      util.addClass( nodes.options, 'active-storage' );
     }
 
     this.populateThemeSelect();
-    this.setTogglePointsLabel();
+    this.setToggleLabel( settings.showPointsScreen, nodes.togglePointsLabel, nodes.togglePointsState );
 
     this.level        = level;
     this.controls     = level.controls;
@@ -67,7 +67,7 @@ define(['settings', 'util', 'nodes', 'storage'], function( settings, util, nodes
     var currentThemeIndex;
 
     // very basic event detection
-    if ( e && e.target.tagName) {
+    if ( e && e.target.tagName ) {
       eventTargetValue = e.target.value;
       themeClass       = eventTargetValue;
       settings.currentTheme = util.getKey( settings.colourThemes, eventTargetValue );
@@ -109,30 +109,29 @@ define(['settings', 'util', 'nodes', 'storage'], function( settings, util, nodes
 
 
   //
-  // set toggle points screen label
+  // set toggle label state
   //
-  Options.prototype.setTogglePointsLabel = function() {
+  Options.prototype.setToggleLabel = function( condition, labelNode, innerNode ) {
     var label;
 
-    if ( settings.showPointsScreen) {
+    if ( condition ) {
       label = 'On';
-      util.addClass( nodes.togglePointsLabel, 'active' );
+      util.addClass( labelNode, 'active' );
     }
     else {
       label = 'Off';
-      util.removeClass( nodes.togglePointsLabel, 'active' );
+      util.removeClass( labelNode, 'active' );
     }
 
-    util.text( nodes.togglePointsState, label, true ); 
+    util.text( innerNode, label, true ); 
   };
-
 
   //
   // toggle points screen
   //
   Options.prototype.togglePointsScreen = function() {
     settings.showPointsScreen = !settings.showPointsScreen;
-    this.setTogglePointsLabel();
+    this.setToggleLabel( settings.showPointsScreen, nodes.togglePointsLabel, nodes.togglePointsState );
   };
 
 
@@ -153,12 +152,10 @@ define(['settings', 'util', 'nodes', 'storage'], function( settings, util, nodes
 
     var savedInfo = storage.save( gameInfo );
 
-    console.log(savedInfo);
-
     this.setLastSavedInfo( savedInfo );
 
-    // display load button
-    util.addClass( nodes.loadButton, 'active' );
+    // display load button and saved label
+    util.addClass( nodes.options, 'active-storage' );
   };
 
 
@@ -168,22 +165,24 @@ define(['settings', 'util', 'nodes', 'storage'], function( settings, util, nodes
   Options.prototype.loadGame = function() {
     var loaded = storage.load();
 
-    // override settings
-    settings.currentTheme     = loaded.theme;
-    settings.showPointsScreen = loaded.showScreen;
-    this.controls.score       = loaded.score;
+    if ( loaded ) {
+      // override settings
+      settings.currentTheme     = loaded.theme;
+      settings.showPointsScreen = loaded.showScreen;
+      this.controls.score       = loaded.score;
 
-    // update the theme
-    this.updateTheme( null, true );
+      // update the theme
+      this.updateTheme( null, true );
 
-    // update toggle points screen label
-    this.setTogglePointsLabel();
+      // update toggle points screen label
+      this.setToggleLabel( settings.showPointsScreen, nodes.togglePointsLabel, nodes.togglePointsState );
 
-    // display the loaded score
-    this.controls.displayScore();
+      // display the loaded score
+      this.controls.displayScore();
 
-    // reset the moves counter and load saved level
-    this.level.loadLevel( loaded.level );
+      // reset the moves counter and load saved level
+      this.level.loadLevel( loaded.level );
+    }
   };
 
 
@@ -191,13 +190,23 @@ define(['settings', 'util', 'nodes', 'storage'], function( settings, util, nodes
   // update save info
   //
   Options.prototype.setLastSavedInfo = function( info ) {
-    if ( util.exists( info.date ) )
+    var dateExists  = util.exists( info.date );
+    var levelExists = util.exists( info.level );
+    var highlightClass = 'highlight';
+
+    if ( dateExists )
       util.text( nodes.lastSavedDate, util.getDateAndTime( info.date ), true );
 
-    console.log(info.level);
-
-    if ( util.exists( info.level ) )
+    if ( levelExists )
       util.text( nodes.lastSavedLevel, settings.levelNameLabel + ' ' + ( info.level + 1 ), true );
+  
+    if ( dateExists || levelExists ) {
+      util.addClass( nodes.savedInfo, highlightClass );
+
+      util.timeout( function() {
+        util.removeClass( nodes.savedInfo, highlightClass );
+      }, settings.saveHighlightDelay )();
+    }
   };
 
 

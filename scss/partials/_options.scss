@@ -19,7 +19,6 @@
   &.opened {
     height: auto;
     margin-top: 15px;
-    border-top: 1px solid $muted;
 
     & > * {
       visibility: visible;
@@ -35,35 +34,74 @@
 
 .options-offset {
   display: inline-block;
-  padding-left: 36%;
+  margin-left: 36%;
 }
 
-#theme-select {
+.select {
   min-width: 30%;
   padding: 1% 0.5%;
 }
 
-#toggle-points-screen {
+.toggle-checkbox {
   position: absolute;
   visibility: hidden;
 }
 
-#toggle-points-screen-label {
+.toggle-label {
   min-width: 40px;
   display: inline-block;
   text-align: center;
   color: #fff;
   background-color: #c0392b;
 
+  &:hover {
+    background-color: darken( #c0392b, $hoverDarken );
+  }
+
   &.active {
     background-color: #27ae60;
+
+    &:hover {
+      background-color: darken( #27ae60, $hoverDarken );
+    }
   }
 }
 
-#load-game {
+#load-game,
+#saved-label {
   display: none;
-  
-  &.active {
+}
+
+#saved-info {
+  display: none;
+
+  span:not(#saved-label) {
     display: inline-block;
+    background-color: #fff;
+
+    @include transition( background-color 0.5s ease );
+  }
+
+  &.highlight span:not(#saved-label) {
+    font-weight: bold;
+    color: #fff;
+    background-color: #727272; //#fbffcb;
+  }
+}
+
+#saved-label {
+  font-weight: bold;
+  font-style: italic;
+}
+
+// a stored game has been found
+#options.active-storage {
+  #load-game,
+  #saved-label {
+    display: inline-block;
+  }
+
+  #saved-info {
+    display: block;
   }
 }

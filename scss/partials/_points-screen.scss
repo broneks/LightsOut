@@ -18,13 +18,6 @@
   @include clearfix;
   @include transform( translateY( -50% ) );
 
-  #points-earned-label,
-  #moves-made-label {
-    display: inline-block;
-    width: 45%;
-    white-space: nowrap;
-  }
-
   #smiley .fa {
     left: 0;
     position: relative;
@@ -42,4 +35,11 @@
       @include animation-fill-mode( forwards );
     }
   }
+}
+
+#points-earned-label,
+#moves-made-label {
+  display: inline-block;
+  width: 45%;
+  white-space: nowrap;
 }

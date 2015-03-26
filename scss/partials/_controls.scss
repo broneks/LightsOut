@@ -16,13 +16,15 @@
 }
 
 #level-name {
-  @include controls-width();
   min-height: 37px;
   text-align: center;
+
+  @include controls-width();
 }
 
 #moves-and-score {
   margin: 0 2px $game-vertical-margin;
+
   @include clearfix;
 }
 
@@ -35,16 +37,20 @@
 
 #controls-buttons {
   @include clearfix;
+}
 
-  #options-toggle-wrapper {
-    float: right;
-    width: 40%;
-    text-align: right;
+#options-toggle-wrapper {
+  float: right;
+  width: 40%;
+  text-align: right;
+}
 
-    #options-toggle {
-      display: inline-block;
-      color: $muted;
-      padding: ( $btn-padding-top * 2 ) 0 0;
-    }
+#options-toggle {
+  display: inline-block;
+  color: $muted;
+  padding: ( $btn-padding-top * 2 ) 0 0;
+
+  &:hover {
+    color: darken( $muted, $hoverDarken );
   }
 }

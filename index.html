@@ -62,15 +62,15 @@
         <div class="row">
           <span class="options-label">Theme:</span>
 
-          <select id="theme-select"></select>
+          <select id="theme-select" class="select"></select>
         </div>
 
         <div class="row">
           <span class="options-label">Points Screen:</span>
 
-          <label for="toggle-points-screen" id="toggle-points-screen-label" class="btn">
-            <span id="toggle-points-screen-state"></span>
-            <input type="checkbox" id="toggle-points-screen">
+          <label for="toggle-points-screen" id="toggle-points-screen-label" class="btn toggle-label">
+            <span id="toggle-points-screen-state" class="toggle-state"></span>
+            <input type="checkbox" id="toggle-points-screen" class="toggle-checkbox">
           </label>
         </div>
 
@@ -81,7 +81,8 @@
           <button id="load-game" class="btn btn-beta">Load</button>
         </div>
 
-        <div class="row">
+        <div id="saved-info" class="row">
+          <span id="saved-label" class="options-offset text-small">Last Saved On:</span>
           <span id="last-saved-date" class="options-offset text-small"></span>
           <span id="last-saved-level" class="options-offset text-small"></span>
         </div>

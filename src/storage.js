@@ -1,26 +1,27 @@
 define(function() {
   'use strict';
 
-  var storage = {};
-  var id      = 'lights';
+  var storage   = {};
+  var storageId = 'lights-out';
+  var divider   = '|';
 
   //
   // save
   //
   storage.save = function( gameInfo ) {
-    var obj       = {};
+    var save      = {};
     var processed = {};
-    var info = gameInfo.join('|');
-    var k    = Math.random().toString( 36 ).substr( 2, 5 );
+    var gameInfoString = gameInfo.join( divider );
+    var key = Math.random().toString( 36 ).substr( 2, 5 );
 
     // game info, key and date saved
-    obj.i = this.cipher( info, k );
-    obj.k = k;
-    obj.d = Date.now();
+    save.i = this.cipher( gameInfoString, key );
+    save.k = key;
+    save.d = Date.now();
 
-    localStorage.setItem( id, JSON.stringify( obj ) );
+    localStorage.setItem( storageId, JSON.stringify( save ) );
 
-    processed.date  = new Date( obj.d );
+    processed.date  = new Date( save.d );
     processed.level = parseInt( gameInfo[3] );
 
     return processed;
@@ -31,12 +32,12 @@ define(function() {
   // load
   //
   storage.load = function() {
-    var retrieved = JSON.parse( localStorage.getItem( id ) );
+    var retrieved = JSON.parse( localStorage.getItem( storageId ) );
     var rawInfo;
     var processed;
 
     if ( retrieved ) {
-      rawInfo = ( this.cipher( retrieved.i, retrieved.k ) ).split('|');
+      rawInfo = ( this.cipher( retrieved.i, retrieved.k ) ).split( divider );
       
       processed = {};
 
@@ -48,14 +49,6 @@ define(function() {
     }
 
     return processed;
-  };
-
-
-  //
-  // clear
-  //
-  storage.clear = function() {
-    localStorage.removeItem( id );
   };
 
 
