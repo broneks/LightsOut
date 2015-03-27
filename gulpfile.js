@@ -5,6 +5,7 @@ var watch   = require('gulp-watch');
 var scss    = require('gulp-sass');
 var bourbon = require('node-bourbon').includePaths;
 var jshint  = require('gulp-jshint');
+var uglify  = require('gulp-uglify');
 
 var jshintConfig = {
   strict    : true,
@@ -33,10 +34,18 @@ gulp.task('jshint', function() {
     });
 });
 
+gulp.task('uglify', function() {
+  gulp.src('./node_modules/requirejs/require.js')
+    .pipe(uglify({
+      preserveComments: 'some'
+    }))
+    .pipe(gulp.dest('./lib/'))
+});
+
 gulp.task('default', function() {
   gulp.watch('./scss/**/*.scss', ['scss']);
   gulp.watch([
     './src/**/*.js',
     '!./lib/**/*.js'
-  ], ['jshint']);
+  ], ['jshint', 'uglify']);
 });

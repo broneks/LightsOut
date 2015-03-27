@@ -39,5 +39,5 @@ define({
   activeStorageClass : 'active-storage',
   toggleOptionsClass : 'opened',
   toggleLabelClass   : 'active',
-  highlightClass     : 'highlight',
+  highlightClass     : 'highlight'
 });
