@@ -6,6 +6,7 @@ var scss    = require('gulp-sass');
 var bourbon = require('node-bourbon').includePaths;
 var jshint  = require('gulp-jshint');
 var uglify  = require('gulp-uglify');
+var shell   = require('gulp-shell');
 
 var jshintConfig = {
   strict    : true,
@@ -42,10 +43,22 @@ gulp.task('uglify', function() {
     .pipe(gulp.dest('./lib/'))
 });
 
-gulp.task('default', function() {
-  gulp.watch('./scss/**/*.scss', ['scss']);
+gulp.task('build', shell.task([
+  './node_modules/requirejs/bin/r.js -o ./build.js'
+]));
+
+gulp.task('watch', function() {
+  gulp.watch([
+    './scss/**/*.scss'
+  ], ['scss']);
+
   gulp.watch([
     './src/**/*.js',
     '!./lib/**/*.js'
-  ], ['jshint', 'uglify']);
+  ], ['build', 'jshint']);
 });
+
+gulp.task('default', [
+  'uglify',
+  'watch'
+]);
