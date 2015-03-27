@@ -1,8 +1,9 @@
 {
   "name": "LightsOut",
   "version": "0.0.0",
-  "description": "",
+  "description": "Lights Out - clear the board by turning off all the lights.",
   "main": "gulpfile.js",
+  "private": true,
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -16,6 +17,9 @@
     "requirejs": "~2.1.16",
     "gulp-uglify": "~1.1.0",
     "gulp-shell": "~0.4.0"
+  },
+  "repository": {
+    "name": "bszulc/LightsOut"
   },
   "author": "Bronek",
   "license": "BSD"

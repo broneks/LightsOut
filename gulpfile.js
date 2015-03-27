@@ -40,7 +40,7 @@ gulp.task('uglify', function() {
     .pipe(uglify({
       preserveComments: 'some'
     }))
-    .pipe(gulp.dest('./lib/'))
+    .pipe(gulp.dest('./js'))
 });
 
 gulp.task('build', shell.task([
