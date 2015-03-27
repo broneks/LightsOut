@@ -34,5 +34,10 @@ define({
   
   btnClass           : 'btn',
   btnAlphaClass      : 'btn-alpha',
-  btnBetaClass       : 'btn-beta'
+  btnBetaClass       : 'btn-beta',
+
+  activeStorageClass : 'active-storage',
+  toggleOptionsClass : 'opened',
+  toggleLabelClass   : 'active',
+  highlightClass     : 'highlight',
 });

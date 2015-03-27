@@ -17,7 +17,7 @@ define(['settings', 'util', 'nodes', 'storage'], function( settings, util, nodes
       this.setLastSavedInfo( loaded );
 
       // display load button and saved label
-      util.addClass( nodes.options, 'active-storage' );
+      util.addClass( nodes.options, nodes.activeStorageClass );
     }
 
     this.populateThemeSelect();
@@ -62,14 +62,12 @@ define(['settings', 'util', 'nodes', 'storage'], function( settings, util, nodes
   //
   Options.prototype.updateTheme = function( e, changeSelectedIndex ) {
     var themeClass = settings.colourThemes[settings.currentTheme];
-    var eventTargetValue;
     var currentThemeIndex;
 
     // very basic event detection
     if ( e && e.target.tagName ) {
-      eventTargetValue = e.target.value;
-      themeClass       = eventTargetValue;
-      settings.currentTheme = util.getKey( settings.colourThemes, eventTargetValue );
+      themeClass = e.target.value;
+      settings.currentTheme = util.getKey( settings.colourThemes, themeClass );
     }
 
     // update the theme select element
@@ -93,7 +91,7 @@ define(['settings', 'util', 'nodes', 'storage'], function( settings, util, nodes
     e.preventDefault();
     e.stopPropagation();
 
-    this.optionsState = util.toggleClass( nodes.options, 'opened' );
+    this.optionsState = util.toggleClass( nodes.options, nodes.toggleOptionsClass );
   };
 
 
@@ -102,7 +100,7 @@ define(['settings', 'util', 'nodes', 'storage'], function( settings, util, nodes
   //
   Options.prototype.closeOptions = function() {
     if ( this.optionsState ) {
-      util.removeClass( nodes.options, 'opened' );
+      util.removeClass( nodes.options, nodes.toggleOptionsClass );
     }
   };
 
@@ -115,11 +113,11 @@ define(['settings', 'util', 'nodes', 'storage'], function( settings, util, nodes
 
     if ( condition ) {
       label = 'On';
-      util.addClass( labelNode, 'active' );
+      util.addClass( labelNode, nodes.toggleLabelClass );
     }
     else {
       label = 'Off';
-      util.removeClass( labelNode, 'active' );
+      util.removeClass( labelNode, nodes.toggleLabelClass );
     }
 
     util.text( innerNode, label, true ); 
@@ -131,6 +129,7 @@ define(['settings', 'util', 'nodes', 'storage'], function( settings, util, nodes
   //
   Options.prototype.togglePointsScreen = function() {
     settings.showPointsScreen = !settings.showPointsScreen;
+
     this.setToggleLabel( settings.showPointsScreen, nodes.togglePointsLabel, nodes.togglePointsState );
   };
 
@@ -155,7 +154,7 @@ define(['settings', 'util', 'nodes', 'storage'], function( settings, util, nodes
     this.setLastSavedInfo( savedInfo );
 
     // display load button and saved label
-    util.addClass( nodes.options, 'active-storage' );
+    util.addClass( nodes.options, nodes.activeStorageClass );
   };
 
 
@@ -192,7 +191,6 @@ define(['settings', 'util', 'nodes', 'storage'], function( settings, util, nodes
   Options.prototype.setLastSavedInfo = function( info ) {
     var dateExists  = util.exists( info.date );
     var levelExists = util.exists( info.level );
-    var highlightClass = 'highlight';
 
     if ( dateExists )
       util.text( nodes.lastSavedDate, util.getDateAndTime( info.date ), true );
@@ -201,10 +199,10 @@ define(['settings', 'util', 'nodes', 'storage'], function( settings, util, nodes
       util.text( nodes.lastSavedLevel, settings.levelNameLabel + ' ' + ( info.level + 1 ), true );
   
     if ( dateExists || levelExists ) {
-      util.addClass( nodes.savedInfo, highlightClass );
+      util.addClass( nodes.savedInfo, nodes.highlightClass );
 
       util.timeout( function() {
-        util.removeClass( nodes.savedInfo, highlightClass );
+        util.removeClass( nodes.savedInfo, nodes.highlightClass );
       }, settings.saveHighlightDelay )();
     }
   };
