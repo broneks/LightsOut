@@ -55,7 +55,7 @@ gulp.task('watch', function() {
   gulp.watch([
     './src/**/*.js',
     '!./lib/**/*.js'
-  ], ['build', 'jshint']);
+  ], ['uglify', 'build', 'jshint']);
 });
 
 gulp.task('default', [

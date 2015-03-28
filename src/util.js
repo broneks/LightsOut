@@ -5,12 +5,14 @@ define(function() {
 
   var toString = Object.prototype.toString;
 
+
   //
   // check if x exists, is not null nor empty
   //
   util.exists = function( x ) {
     return ( typeof x !== 'undefined' ) && ( x !== null );
   };
+
 
   //
   // check if x does not exists, is null or empty
