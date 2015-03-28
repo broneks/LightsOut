@@ -8,12 +8,7 @@ define(function() {
   // check if x exists, is not null nor empty
   //
   util.exists = function( x ) {
-    return (
-      ( typeof x !== 'undefined' ) && 
-      ( x !== null ) &&
-      ( x.length ) || 
-      ( x )
-    );
+    return ( typeof x !== 'undefined' ) && ( x !== null );
   };
 
   //
