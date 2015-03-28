@@ -6,6 +6,7 @@ define(function( require ) {
   var util = require('util');
 
   describe('util', function() {
+    var toString = Object.prototype.toString;
     var array  = [1, '2', 3, [], {}];
     var obj    = {zero: 2, one: '1', two: ['2'], three: {num: 3}, four: function() {}};
     var str    = '123';
@@ -17,6 +18,7 @@ define(function( require ) {
     var undef  = void 0;
     var undef2 = undefined;
     var undef3;
+
 
     describe('exists()', function() {
       it('should return true', function() {
@@ -30,6 +32,7 @@ define(function( require ) {
       });
     });
 
+
     describe('notExists()', function() {
       it('should return true', function() {
         assert.equal(util.notExists(none), true);
@@ -38,6 +41,7 @@ define(function( require ) {
         assert.equal(util.notExists(undef3), true);
       });
     });
+
 
     describe('isNumber()', function() {
       it('should return true', function() {
@@ -62,6 +66,7 @@ define(function( require ) {
       });
     });
 
+
     describe('cloneArray()', function() {
       it('should return a cloned array', function() {
         var cloned = util.cloneArray(array);
@@ -80,6 +85,7 @@ define(function( require ) {
         assert.equal(util.cloneArray(undef), undef);
       });
     });
+
 
     describe('greaterNumber()', function() {
       var a = 100;
@@ -118,15 +124,42 @@ define(function( require ) {
       });
     });
 
-    describe('timeout()', function() {
-      it.skip('should timeout', function() {
 
+    describe('timeout()', function() {
+      it('should timeout for a 1 second', function( done ) {
+        var callback = function() {
+          done();
+        };
+        
+        util.timeout( callback, 1000 )();
       });
 
-      it.skip('should do nothing', function() {
+      it('should preserve callback arguments', function( done ) {
+        var callback = function( first, second ) {
+          if ( ( first > 3 ) && second ) 
+            done();
+        };
+        
+        util.timeout( callback, 1000 )( 5, true );
+      });
 
+      it('should preserve reference to this', function( done ) {
+        var testObj  = {
+          getThis : function() {
+            return this;
+          },
+          callback : function() {
+            done();
+          },
+          indirect : function() {
+            this.callback();
+          }
+        }
+        
+        util.timeout( testObj.indirect, 100, testObj.getThis() )();
       });
     });
+
 
     describe('getDateAndTime()', function() {
       it('should return date and time string', function() {
@@ -154,6 +187,7 @@ define(function( require ) {
       });
     });
 
+
     describe('getKey()', function() {
       it('should return "zero"', function() {
         assert.equal(util.getKey(obj, 2), 'zero');
@@ -178,15 +212,50 @@ define(function( require ) {
       });
     });
 
+
+    describe('getByClass()', function() {
+      var notEmptyHTMLCollection = function( obj ) {
+        return ( obj.toString() === '[object HTMLCollection]' ) && obj.length > 0;
+      };
+      var notEmptyArray = function( array ) {
+        return ( toString.call( array ) === '[object Array]' ) && array.length > 0;
+      };
+
+      it('should return an non-empty array of DOM elements', function() {
+        var gridRows = util.getByClass( 'grid-row', true );
+
+        assert.equal(notEmptyArray( gridRows ), true);
+      });
+
+      it('should return an empty array of DOM elements', function() {
+        var notFound = util.getByClass( 'not-found', true );
+
+        assert.equal(notEmptyArray( notFound ), false);
+      });
+
+      it('should return a non-empty HTMLCollection object', function() {
+        var gridRows = util.getByClass( 'grid-row' );
+
+        assert.equal(notEmptyHTMLCollection( gridRows ), true);
+      });
+
+      it('should return an empty HTMLCollection object', function() {        
+        var notFound = util.getByClass( 'not-found' );
+
+        assert.equal(notEmptyHTMLCollection( notFound ), false);
+      });
+    });
+
+
     describe('getById()', function() {
       it('should return DOM element with id of "level-name"', function() {
-        var levelName = util.getById('level-name');
+        var levelName = util.getById( 'level-name' );
 
         assert.equal(levelName.id, 'level-name');
       });
 
       it('should return null', function() {
-        var notFound = util.getById('not-found');
+        var notFound = util.getById( 'not-found' );
         
         assert.equal(notFound, null);
       });
