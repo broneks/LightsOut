@@ -3,6 +3,7 @@ define(function() {
 
   var util = {};
 
+  var toString = Object.prototype.toString;
 
   //
   // check if x exists, is not null nor empty
@@ -23,10 +24,7 @@ define(function() {
   // check if x is a number
   //
   util.isNumber = function( x ) {
-    return (
-      ( typeof x === 'number' ) &&
-      ( isFinite( x ) )
-    );
+    return ( x === x ) && ( toString.call( x ) === '[object Number]' );
   };
 
 
@@ -74,6 +72,8 @@ define(function() {
     var MONTHS = ['Jan', 'Feb', 'March', 'April', 'May', 'June', 'July', 'Aug', 'Sept', 'Oct', 'Nov', 'Dec'];
 
     return function( date ) {
+      if ( toString.call( date ) !== '[object Date]' ) return;
+
       var month   = MONTHS[date.getMonth()];
       var day     = date.getDate();
       var hours   = ( date.getHours() < 10 ? '0' : '' ) + date.getHours();
@@ -87,7 +87,7 @@ define(function() {
 
 
   //
-  // get key by value
+  // get key by string or number value
   //
   util.getKey = function( obj, value ) {
     var key;
@@ -96,8 +96,6 @@ define(function() {
       if( obj[key] === value )
         return key;
     }
-    
-    return null;
   };
 
 
