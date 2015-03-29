@@ -1,5 +1,4 @@
 lib/*
-!lib/require.min.js
 
 npm-debug.log
 node_modules/
