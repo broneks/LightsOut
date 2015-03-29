@@ -6,6 +6,7 @@ define(function( require ) {
   var util = require('util');
 
   describe('util', function() {
+    var mochaDiv = document.getElementById('mocha');
     var toString = Object.prototype.toString;
     var array  = [1, '2', 3, [], {}];
     var obj    = {zero: 2, one: '1', two: ['2'], three: {num: 3}, four: function() {}};
@@ -22,23 +23,23 @@ define(function( require ) {
 
     describe('exists()', function() {
       it('should return true', function() {
-        assert.equal(util.exists(array), true);
-        assert.equal(util.exists(obj), true);
-        assert.equal(util.exists(str), true);
-        assert.equal(util.exists(num), true);
-        assert.equal(util.exists(bool), true);
-        assert.equal(util.exists(func), true);
-        assert.equal(util.exists(nan), true);
+        assert.isTrue(util.exists(array));
+        assert.isTrue(util.exists(obj));
+        assert.isTrue(util.exists(str));
+        assert.isTrue(util.exists(num));
+        assert.isTrue(util.exists(bool));
+        assert.isTrue(util.exists(func));
+        assert.isTrue(util.exists(nan));
       });
     });
 
 
     describe('notExists()', function() {
       it('should return true', function() {
-        assert.equal(util.notExists(none), true);
-        assert.equal(util.notExists(undef), true);
-        assert.equal(util.notExists(undef2), true);
-        assert.equal(util.notExists(undef3), true);
+        assert.isTrue(util.notExists(none));
+        assert.isTrue(util.notExists(undef));
+        assert.isTrue(util.notExists(undef2));
+        assert.isTrue(util.notExists(undef3));
       });
     });
 
@@ -50,19 +51,19 @@ define(function( require ) {
         var negative   = -123;
         var expression = 2 + 2;
 
-        assert.equal(util.isNumber(integer), true);
-        assert.equal(util.isNumber(decimal), true);
-        assert.equal(util.isNumber(negative), true);
-        assert.equal(util.isNumber(expression), true);
+        assert.isTrue(util.isNumber(integer));
+        assert.isTrue(util.isNumber(decimal));
+        assert.isTrue(util.isNumber(negative));
+        assert.isTrue(util.isNumber(expression));
       });
 
       it('should return false', function() {
-        assert.notEqual(util.isNumber(nan), true);
-        assert.notEqual(util.isNumber(array), true);
-        assert.notEqual(util.isNumber(obj), true);
-        assert.notEqual(util.isNumber(str), true);
-        assert.notEqual(util.isNumber(bool), true);
-        assert.notEqual(util.isNumber(func), true);
+        assert.isFalse(util.isNumber(nan));
+        assert.isFalse(util.isNumber(array));
+        assert.isFalse(util.isNumber(obj));
+        assert.isFalse(util.isNumber(str));
+        assert.isFalse(util.isNumber(bool));
+        assert.isFalse(util.isNumber(func));
       });
     });
 
@@ -75,14 +76,14 @@ define(function( require ) {
       });
 
       it('should do nothing', function() {
-        assert.equal(util.cloneArray(obj), undef);
-        assert.equal(util.cloneArray(str), undef);
-        assert.equal(util.cloneArray(num), undef);
-        assert.equal(util.cloneArray(bool), undef);
-        assert.equal(util.cloneArray(func), undef);
-        assert.equal(util.cloneArray(nan), undef);
-        assert.equal(util.cloneArray(none), undef);
-        assert.equal(util.cloneArray(undef), undef);
+        assert.isUndefined(util.cloneArray(obj));
+        assert.isUndefined(util.cloneArray(str));
+        assert.isUndefined(util.cloneArray(num));
+        assert.isUndefined(util.cloneArray(bool));
+        assert.isUndefined(util.cloneArray(func));
+        assert.isUndefined(util.cloneArray(nan));
+        assert.isUndefined(util.cloneArray(none));
+        assert.isUndefined(util.cloneArray(undef));
       });
     });
 
@@ -114,24 +115,24 @@ define(function( require ) {
       });
 
       it('should do nothing', function() {
-        assert.equal(util.greaterNumber(obj, obj), undef);
-        assert.equal(util.greaterNumber(str, str), undef);
-        assert.equal(util.greaterNumber(bool, bool), undef);
-        assert.equal(util.greaterNumber(func, func), undef);
-        assert.equal(util.greaterNumber(nan, nan), undef);
-        assert.equal(util.greaterNumber(none, none), undef);
-        assert.equal(util.greaterNumber(undef, undef), undef);
+        assert.isUndefined(util.greaterNumber(obj, obj));
+        assert.isUndefined(util.greaterNumber(str, str));
+        assert.isUndefined(util.greaterNumber(bool, bool));
+        assert.isUndefined(util.greaterNumber(func, func));
+        assert.isUndefined(util.greaterNumber(nan, nan));
+        assert.isUndefined(util.greaterNumber(none, none));
+        assert.isUndefined(util.greaterNumber(undef, undef));
       });
     });
 
 
     describe('timeout()', function() {
-      it('should timeout for a 1 second', function( done ) {
+      it('should timeout for 100 ms', function( done ) {
         var callback = function() {
           done();
         };
         
-        util.timeout( callback, 1000 )();
+        util.timeout( callback, 100 )();
       });
 
       it('should preserve callback arguments', function( done ) {
@@ -140,7 +141,7 @@ define(function( require ) {
             done();
         };
         
-        util.timeout( callback, 1000 )( 5, true );
+        util.timeout( callback, 100 )( 5, true );
       });
 
       it('should preserve reference to this', function( done ) {
@@ -177,13 +178,13 @@ define(function( require ) {
       });
 
       it('should do nothing', function() {
-        assert.equal(util.getDateAndTime(obj), undef);
-        assert.equal(util.getDateAndTime(str), undef);
-        assert.equal(util.getDateAndTime(bool), undef);
-        assert.equal(util.getDateAndTime(func), undef);
-        assert.equal(util.getDateAndTime(nan), undef);
-        assert.equal(util.getDateAndTime(none), undef);
-        assert.equal(util.getDateAndTime(undef), undef);
+        assert.isUndefined(util.getDateAndTime(obj));
+        assert.isUndefined(util.getDateAndTime(str));
+        assert.isUndefined(util.getDateAndTime(bool));
+        assert.isUndefined(util.getDateAndTime(func));
+        assert.isUndefined(util.getDateAndTime(nan));
+        assert.isUndefined(util.getDateAndTime(none));
+        assert.isUndefined(util.getDateAndTime(undef));
       });
     });
 
@@ -199,16 +200,16 @@ define(function( require ) {
 
       it('should do nothing', function() {
         // limitation
-        assert.equal(util.getKey(obj, ['2']), undef);
-        assert.equal(util.getKey(obj, {num: 3}), undef);
+        assert.isUndefined(util.getKey(obj, ['2']));
+        assert.isUndefined(util.getKey(obj, {num: 3}));
 
-        assert.equal(util.getKey(obj), undef);
-        assert.equal(util.getKey(str), undef);
-        assert.equal(util.getKey(bool), undef);
-        assert.equal(util.getKey(func), undef);
-        assert.equal(util.getKey(nan), undef);
-        assert.equal(util.getKey(none), undef);
-        assert.equal(util.getKey(undef), undef);
+        assert.isUndefined(util.getKey(obj));
+        assert.isUndefined(util.getKey(str));
+        assert.isUndefined(util.getKey(bool));
+        assert.isUndefined(util.getKey(func));
+        assert.isUndefined(util.getKey(nan));
+        assert.isUndefined(util.getKey(none));
+        assert.isUndefined(util.getKey(undef));
       });
     });
 
@@ -224,25 +225,25 @@ define(function( require ) {
       it('should return an non-empty array of DOM elements', function() {
         var gridRows = util.getByClass( 'grid-row', true );
 
-        assert.equal(notEmptyArray( gridRows ), true);
+        assert.isTrue(notEmptyArray( gridRows ));
       });
 
       it('should return an empty array of DOM elements', function() {
         var notFound = util.getByClass( 'not-found', true );
 
-        assert.equal(notEmptyArray( notFound ), false);
+        assert.isFalse(notEmptyArray( notFound ));
       });
 
       it('should return a non-empty HTMLCollection object', function() {
         var gridRows = util.getByClass( 'grid-row' );
 
-        assert.equal(notEmptyHTMLCollection( gridRows ), true);
+        assert.isTrue(notEmptyHTMLCollection( gridRows ));
       });
 
       it('should return an empty HTMLCollection object', function() {        
         var notFound = util.getByClass( 'not-found' );
 
-        assert.equal(notEmptyHTMLCollection( notFound ), false);
+        assert.isFalse(notEmptyHTMLCollection( notFound ));
       });
     });
 
@@ -257,7 +258,200 @@ define(function( require ) {
       it('should return null', function() {
         var notFound = util.getById( 'not-found' );
         
-        assert.equal(notFound, null);
+        assert.isNull(notFound);
+      });
+    });
+
+
+    describe('elt()', function() {
+      it('should create a checkbox element', function() {
+        var el = util.elt('input', null, [
+          {type: 'checkbox'}
+        ]);
+
+        assert.equal(el.tagName, 'INPUT');
+        assert.equal(el.type, 'checkbox');
+      });
+
+      it('should create a div with class of "wrapper" and data-test attribute of "foo"', function() {
+        var el = util.elt('div', 'wrapper', [
+          {'data-test': 'foo'}
+        ]);
+
+        assert.equal(el.tagName, 'DIV');
+        assert.equal(el.className, 'wrapper');
+        assert.equal(el.getAttribute('data-test'), 'foo');
+      });
+
+      it('should create a paragraph element containing the text: "lorem ipsum"', function() {
+        var text = 'lorem ipsum';
+        var el   = util.elt('p', null, null, text);
+
+        assert.equal(el.tagName, 'P');
+        assert.equal(el.innerHTML, text);
+      });
+    });
+
+
+    describe('___ tests that use div#test-div ___', function() {
+      var testDiv;
+
+      beforeEach(function() {
+        testDiv    = document.createElement('div');
+        testDiv.id = 'test-div';
+        mochaDiv.appendChild(testDiv);
+
+        return testDiv;
+      });
+
+
+      describe('addAttrs()', function() {
+        it('should add data-test attribute and style attribute', function() {
+          var attrs = [
+            {'data-test' : 'foo'},
+            {'style'     : 'color: red;'}
+          ];
+
+          util.addAttrs(testDiv, attrs);
+
+          var dataTestAttr = testDiv.getAttribute('data-test');
+          var styleAttr    = testDiv.getAttribute('style');
+
+          assert.equal(dataTestAttr, attrs[0]['data-test']);
+          assert.equal(styleAttr, attrs[1]['style']);
+        });
+      });
+
+
+      describe('addClass()', function() {
+        it('should add two classes: "foo" and "bar"', function() {
+          var classNames = ['foo', 'bar'];
+
+          util.addClass(testDiv, classNames);
+
+          assert.equal(testDiv.className, classNames.join(' '));
+        });
+
+        it('should add class of "coffee"', function() {
+          var className = 'coffee';
+
+          util.addClass(testDiv, className);
+
+          assert.equal(testDiv.className, className);
+        });
+      });
+
+
+      describe('hasClass()', function() {
+        it('should have a class of "skyscraper"', function() {
+          var className = 'skyscraper';
+
+          testDiv.className = className;
+
+          assert.isTrue(util.hasClass(testDiv, className));
+        });
+
+        it('should not have a class of "atlantic"', function() {
+          assert.isFalse(util.hasClass(testDiv, 'atlantic'));
+        });
+      });
+
+
+      describe('removeClass()', function() {
+        beforeEach(function() {
+          testDiv.className = 'foo bar baz';
+        });
+
+        it('should remove class of "foo"', function() {
+          util.removeClass(testDiv, 'foo');
+
+          assert.equal(testDiv.className, 'bar baz');
+        });
+
+        it('should remove classes of "bar" and "baz"', function() {
+          util.removeClass(testDiv, ['bar', 'baz']);
+
+          assert.equal(testDiv.className, 'foo');
+        });
+
+        it('should remove all classes', function() {
+          util.removeClass(testDiv, true);
+
+          assert.equal(testDiv.className, '');
+        });
+      });
+
+
+      describe('toggleClass()', function() {
+        it('should toggle a class', function() {
+          var className = 'this-is-a-class';
+
+          util.toggleClass(testDiv, className);
+          assert.equal(testDiv.className, className);
+
+          util.toggleClass(testDiv, className);
+          assert.equal(testDiv.className, '');
+        });
+      });
+
+
+      describe('text()', function() {
+        it('should append a textNode containing the text: "hello world"', function() {
+          util.text(testDiv, 'hello world');
+
+          assert.equal(testDiv.innerHTML, 'hello world');
+        });
+
+        it('should replace the inner text with: "blast off"', function() {
+          testDiv.innerHTML = 'hello world ';
+
+          util.text(testDiv, 'blast off', true);
+
+          assert.equal(testDiv.innerHTML, 'blast off');
+        });
+      });
+
+
+      describe('append()', function() {
+        var testOne = document.createElement('div');
+        testOne.id  = 'test-one';
+
+        var testTwo = document.createElement('div');
+        testTwo.id  = 'test-two';
+
+        it('should append testOne to testDiv', function() {
+          util.append(testDiv, testOne);
+
+          assert.equal(testDiv.childNodes[0], testOne);
+        });
+
+        it('should append both testOne and testTwo to testDiv', function() {
+          util.append(testDiv, [testOne, testTwo]);
+
+          assert.equal(testDiv.childNodes[0], testOne);
+          assert.equal(testDiv.childNodes[1], testTwo);
+        });
+      });
+
+
+      describe('remove()', function() {
+        var testOne = document.createElement('div');
+        testOne.id  = 'test-one';
+
+        it('should remove testOne child from testDiv', function() {
+          testDiv.appendChild(testOne);
+          
+          assert.equal(testDiv.childNodes[0], testOne);
+
+          util.remove(testDiv, testOne);
+
+          assert.equal(testDiv.childNodes.length, 0);
+        });
+      });
+
+
+      afterEach('after', function() {
+        mochaDiv.removeChild(testDiv);
       });
     });
   });
