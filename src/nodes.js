@@ -27,7 +27,7 @@ define({
   togglePointsScreen : document.getElementById( 'toggle-points-screen' ),
   togglePointsLabel  : document.getElementById( 'toggle-points-screen-label' ),
   togglePointsState  : document.getElementById( 'toggle-points-screen-state' ),
-  
+ 
   rowClass           : 'grid-row',
   cellClass          : 'grid-cell',
   lightCellClass     : 'light-cell',
@@ -35,6 +35,10 @@ define({
   btnClass           : 'btn',
   btnAlphaClass      : 'btn-alpha',
   btnBetaClass       : 'btn-beta',
+
+  initLoadClass         : 'init-load-wrapper',
+  initLoadButtonClass   : 'init-load-game',
+  initCancelButtonClass : 'init-cancel-load',
 
   activeStorageClass : 'active-storage',
   toggleOptionsClass : 'opened',

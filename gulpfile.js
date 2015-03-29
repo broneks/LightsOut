@@ -23,7 +23,7 @@ gulp.task('scss', function() {
       includePaths: bourbon,
       outputStyle: 'compressed' //'nested'
     }))
-    .pipe(gulp.dest('./css'));
+    .pipe(gulp.dest('./game/css'));
 });
 
 gulp.task('jshint', function() {
@@ -37,10 +37,11 @@ gulp.task('jshint', function() {
 
 gulp.task('uglify', function() {
   gulp.src('./node_modules/requirejs/require.js')
+    .pipe(plumber())
     .pipe(uglify({
       preserveComments: 'some'
     }))
-    .pipe(gulp.dest('./js'))
+    .pipe(gulp.dest('./game/js'))
 });
 
 gulp.task('build', shell.task([
@@ -54,7 +55,7 @@ gulp.task('watch', function() {
 
   gulp.watch([
     './src/**/*.js',
-    '!./lib/**/*.js'
+    '!./game/lib/**/*.js'
   ], ['build', 'jshint']);
 });
 

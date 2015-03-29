@@ -2,7 +2,6 @@ define(['util', 'nodes'], function( util, nodes ) {
   'use strict';
   
   function Cell( level, state, position ) {
-
     var self = this;
 
     //

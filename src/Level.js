@@ -87,9 +87,8 @@ define(['settings', 'util', 'nodes', 'levels', 'Cell', 'Controls', 'Options'], f
         //
         util.text( nodes.levelName, 'To Be Continued...', true );
         return;
-        
-        // index = 0;
-        // level = levels[index];
+
+        // TODO: handle game end and create end screen
       }
 
       this.number    = index;
@@ -112,6 +111,7 @@ define(['settings', 'util', 'nodes', 'levels', 'Cell', 'Controls', 'Options'], f
   Level.prototype.update = function() {
     this.controls.countMoves();
     
+    this.options.removeLoadGameOverlay();
     this.options.closeOptions();
 
     this.generateGrid();

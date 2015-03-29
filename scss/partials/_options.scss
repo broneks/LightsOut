@@ -84,6 +84,7 @@
 
   &.highlight span:not(#saved-label) {
     color: #000;
+    font-style: italic;
     background-color: #fbffcb;
   }
 }
@@ -102,5 +103,46 @@
 
   #saved-info {
     display: block;
+  }
+}
+
+
+// init load game buttons
+.init-load-wrapper {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.45);
+
+  &:before {
+    content: "";
+    position: absolute;
+    top: 40%;
+    left: 0;
+    right: 0;
+    bottom: 40%;
+    background: rgba(255, 255, 255, 0.65);
+  }
+
+  .init-load-game,
+  .init-cancel-load {
+    position: absolute;
+    top: 40%;
+    bottom: 40%;
+    width: 50%;
+    font-size: 1.3em;
+    border: 0;
+  }
+
+  .init-load-game {
+    left: 0;
+  }
+
+  .init-cancel-load {
+    right: 0;
+    color: #fff;
+    background-color: #e74c3c;
   }
 }

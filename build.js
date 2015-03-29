@@ -1,7 +1,7 @@
 {
   appDir: './src',
   baseUrl: './',
-  dir: './js/src',
+  dir: './game/js/src',
   name: 'main',
   removeCombined: true
 }

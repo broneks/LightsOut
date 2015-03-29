@@ -16,6 +16,8 @@ define(['settings', 'util', 'nodes', 'storage'], function( settings, util, nodes
     if ( loaded ) {
       this.setLastSavedInfo( loaded );
 
+      this.createLoadGameOverlay();
+
       // display load button and saved label
       util.addClass( nodes.options, nodes.activeStorageClass );
     }
@@ -29,6 +31,36 @@ define(['settings', 'util', 'nodes', 'storage'], function( settings, util, nodes
   }
 
   Options.prototype.constructor = Options;
+
+
+  //
+  // create init load game buttons and wrapper
+  //
+  Options.prototype.createLoadGameOverlay = function() {
+    var self    = this;
+    var load    = util.elt( 'button', nodes.initLoadButtonClass, null, 'Load Game' );
+    var cancel  = util.elt( 'button', nodes.initCancelButtonClass, null, 'Cancel' );
+
+    util.addEvent( load, 'click', self.loadGame, false, self );
+    util.addEvent( cancel, 'click', self.removeLoadGameOverlay, false, self );
+
+    // create a wrapper
+    this.loadGameWrapper = util.elt( 'div', nodes.initLoadClass );
+
+    util.append( this.loadGameWrapper, [load, cancel] );
+    util.append( nodes.main, this.loadGameWrapper );
+  };
+
+
+  //
+  // remove init load game buttons and wrapper
+  //
+  Options.prototype.removeLoadGameOverlay = function() {
+    if ( util.exists( this.loadGameWrapper ) ) {
+      util.remove( nodes.main, this.loadGameWrapper );
+      this.loadGameWrapper = null;
+    }
+  };
 
 
   //
@@ -182,6 +214,8 @@ define(['settings', 'util', 'nodes', 'storage'], function( settings, util, nodes
       // reset the moves counter and load saved level
       this.level.loadLevel( loaded.level );
     }
+
+    this.removeLoadGameOverlay();
   };
 
 

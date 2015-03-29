@@ -99,3 +99,53 @@
   }
 
 }
+
+@media screen and ( min-width: 515px ) {
+  .init-load-wrapper {
+    top: 5%;
+    right: -11px;
+    left: auto;
+    bottom: auto;
+    padding: 10px;
+    background: #ffffff;
+    border: 1px solid #c2c2c2;
+    border-top-left-radius: $border-radius;
+    border-bottom-left-radius: $border-radius;
+    border-top-right-radius: $border-radius;
+
+    &:before {
+      display: none;
+    }
+
+    &:after {
+      content: "";
+      position: absolute;
+      right: -1px;
+      bottom: -23px;
+      width: 0;
+      height: 0;
+      border-bottom: 11px solid transparent;
+      border-right: 11px solid transparent;
+      border-top: 11px solid #b2b2b2;
+    }
+
+    .init-load-game,
+    .init-cancel-load {
+      font-size: 1em;
+    }
+
+    .init-load-game {
+      position: static;
+      width: auto;
+      padding: 5px;
+      margin: 0;
+      transform: none;
+      border: 1px solid #bbb;
+      border-radius: $border-radius;
+    }
+
+    .init-cancel-load {
+      display: none;
+    }
+  }
+}
