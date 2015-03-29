@@ -1,11 +1,7 @@
 {
   appDir: './src',
   baseUrl: './',
-  dir: './js',
-  removeCombined: true,
-  modules: [
-    {
-      name: 'main'
-    }
-  ]
+  dir: './js/src',
+  name: 'main',
+  removeCombined: true
 }

@@ -55,10 +55,11 @@ gulp.task('watch', function() {
   gulp.watch([
     './src/**/*.js',
     '!./lib/**/*.js'
-  ], ['uglify', 'build', 'jshint']);
+  ], ['build', 'jshint']);
 });
 
 gulp.task('default', [
   'uglify',
+  'build',
   'watch'
 ]);
