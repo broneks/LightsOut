@@ -37,9 +37,9 @@ define(['settings', 'util', 'nodes', 'storage'], function( settings, util, nodes
   // create init load game buttons and wrapper
   //
   Options.prototype.createLoadGameOverlay = function() {
-    var self    = this;
-    var load    = util.elt( 'button', nodes.initLoadButtonClass, null, 'Load Game' );
-    var cancel  = util.elt( 'button', nodes.initCancelButtonClass, null, 'Cancel' );
+    var self   = this;
+    var load   = util.elt( 'button', nodes.initLoadButtonClass, null, 'Load Game' );
+    var cancel = util.elt( 'button', nodes.initCancelButtonClass, null, 'Cancel' );
 
     util.addEvent( load, 'click', self.loadGame, false, self );
     util.addEvent( cancel, 'click', self.removeLoadGameOverlay, false, self );

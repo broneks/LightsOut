@@ -20,10 +20,10 @@ $cell-padding : 5px;
   .grid-row {
     height: $inner-size;
     padding: 0;
-
-    &:not(:first-child) {
-      border-top: $inner-border;
-    } 
+    
+    & + .grid-row {
+      border-top: $inner-border; 
+    }
   }
 
   .grid-cell {

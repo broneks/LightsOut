@@ -75,7 +75,6 @@ define(function() {
       ],
       minMoves: 4
     },
-
     {
       blueprint: [
         [1, 1, 1, 0, 0],
