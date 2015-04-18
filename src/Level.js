@@ -73,22 +73,30 @@ define(['settings', 'util', 'nodes', 'levels', 'Cell', 'Controls', 'Options'], f
 
     this.resetCells();
 
+    // the last level was beat -- show the game end screen
+    if ( ( this.number === levels.length - 1 ) && index === levels.length ) {
+      //
+      // TEMPORARY
+      //
+      util.text( nodes.levelName, 'You Beat the Game!', true );
+      return;
+
+      // TODO: handle game end and create end screen
+    }
+
     // if the current level number is not the same as the index passed in
     // or a blueprint for the level does not already exist
     if ( ( this.number !== index ) && util.notExists( this.blueprint ) ) {
       level = levels[index];
-
-      if ( !nodes.main      ) throw new Error( '#main-container element was not found' );
-      if ( !nodes.levelName ) throw new Error( '#level-name element was not found' );
       
       if ( util.notExists( level ) ) {
         //
         // TEMPORARY
         //
-        util.text( nodes.levelName, 'To Be Continued...', true );
+        util.text( nodes.levelName, 'Level Not Found...', true );
         return;
 
-        // TODO: handle game end and create end screen
+        // TODO: handle level not found screen
       }
 
       this.number    = index;
