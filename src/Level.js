@@ -66,7 +66,7 @@ define(['settings', 'util', 'nodes', 'levels', 'Cell', 'Controls', 'Options'], f
 
 
   //
-  // render the level's blueprint and handle any errors
+  // render the level's blueprint
   //
   Level.prototype.render = function( index ) {
     var level;
@@ -123,9 +123,8 @@ define(['settings', 'util', 'nodes', 'levels', 'Cell', 'Controls', 'Options'], f
     this.options.closeOptions();
 
     this.generateGrid();
-    this.isCompleted();
 
-    if ( this.completed )
+    if ( this.isCompleted() )
       util.timeout( this.advanceLevel, settings.advanceLevelDelay, this )();
   };
 
@@ -136,20 +135,15 @@ define(['settings', 'util', 'nodes', 'levels', 'Cell', 'Controls', 'Options'], f
   Level.prototype.isCompleted = function() {
     var grid = util.cloneArray( this.grid );
 
-    // flatten the rows of the grid
-    var flattenedGrid = grid.reduce(function( a, b ) {
-      return a.concat(b);
-    });
-
     // add up all of the states of the cells ( on = 1, off = 0 )
-    var sumOfStates  = flattenedGrid.reduce(function( a, b ) {
+    var sumOfStates = grid.reduce(function( a, b ) {
+      return a.concat(b);
+    }).reduce(function( a, b ) {
       return a + b; 
     });
 
-    // console.log( sumOfStates );
-
     // the level is complete if the sum of the cell states is equal to zero
-    this.completed = sumOfStates === 0;
+    return this.completed = sumOfStates === 0;
   };
 
 
@@ -160,9 +154,9 @@ define(['settings', 'util', 'nodes', 'levels', 'Cell', 'Controls', 'Options'], f
     var rows = util.getByClass( nodes.rowClass, true );
 
     this.cells.forEach(function( row ) {
-     row.forEach(function( cell ) {
-       cell.delete();        
-     });
+      row.forEach(function( cell ) {
+        cell.delete();        
+      });
     });
 
     rows.forEach(function( row ) {
@@ -204,7 +198,6 @@ define(['settings', 'util', 'nodes', 'levels', 'Cell', 'Controls', 'Options'], f
 
     var advance = function() {
       self.resetBlueprint();
-
       self.render( self.number + 1 );
     };  
 
