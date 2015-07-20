@@ -45,8 +45,8 @@ define(function() {
   //
   util.greaterNumber = function( a, b ) {
     var greater;
-    
-    if ( this.isNumber( a ) && this.isNumber( b ) ) 
+
+    if ( this.isNumber( a ) && this.isNumber( b ) )
       greater = ( a > b ) ? a : b;
 
     return greater;
@@ -74,7 +74,9 @@ define(function() {
     var MONTHS = ['Jan', 'Feb', 'March', 'April', 'May', 'June', 'July', 'Aug', 'Sept', 'Oct', 'Nov', 'Dec'];
 
     return function( date ) {
-      if ( toString.call( date ) !== '[object Date]' ) return;
+      if ( toString.call( date ) !== '[object Date]' ) {
+        date = new Date( date );
+      }
 
       var month   = MONTHS[date.getMonth()];
       var day     = date.getDate();
@@ -185,10 +187,12 @@ define(function() {
   util.text = function( node, str, replace ) {
     var text = document.createTextNode( str );
 
-    if ( replace ) 
+    if ( replace )
       node.innerHTML = str;
-    else 
+    else
       this.append( node, text );
+
+    return util;
   };
 
 
@@ -216,6 +220,8 @@ define(function() {
       });
     else
       parent.appendChild( child );
+
+    return util;
   };
 
 
@@ -224,6 +230,8 @@ define(function() {
   //
   util.remove = function( parent, child ) {
     parent.removeChild( child );
+
+    return util;
   };
 
 
@@ -242,7 +250,7 @@ define(function() {
   //
   util.getByClass = function( className, returnArray ) {
     var elts = document.getElementsByClassName( className );
-    
+
     if ( returnArray )
       return Array.prototype.slice.call( elts );
     else

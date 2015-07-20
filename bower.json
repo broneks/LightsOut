@@ -11,6 +11,7 @@
   ],
   "dependencies": {
     "normalize.css": "~3.0.2",
-    "font-awesome-bower": "~4.3.0"
+    "font-awesome-bower": "~4.3.0",
+    "firebase": "~2.2.7"
   }
 }

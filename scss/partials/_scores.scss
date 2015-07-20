@@ -1,0 +1,36 @@
+.loading-message {
+  text-align: center;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  @include transform(translate(-50%, -50%));
+}
+
+.high-scores-wrapper {
+  height: 100%;
+  overflow: auto;
+}
+
+.high-scores {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+
+  .score-row {
+    margin-bottom: 10px;
+    border-bottom: 1px solid #eee;
+
+    span {
+      display: inline-block;
+      margin-bottom: 10px;
+    }
+
+    .name {
+      width: 20%;
+    }
+    .score,
+    .date {
+      width: 40%;
+    }
+  }
+}

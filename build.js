@@ -1,7 +1,8 @@
 {
   appDir: './src',
   baseUrl: './',
-  dir: './game/js/src',
+  dir: 'game/js/src',
   name: 'main',
-  removeCombined: true
+  removeCombined: true,
+  mainConfigFile: './src/config.js'
 }

@@ -6,7 +6,7 @@ define({
   pointsScreen       : document.getElementById( 'points-screen' ),
   pointsEarned       : document.getElementById( 'points-earned' ),
   movesMade          : document.getElementById( 'moves-made' ),
-  
+
   moves              : document.getElementById( 'moves' ),
   score              : document.getElementById( 'score' ),
 
@@ -19,19 +19,19 @@ define({
   optionsToggle      : document.getElementById( 'options-toggle' ),
   saveButton         : document.getElementById( 'save-game' ),
   loadButton         : document.getElementById( 'load-game' ),
-  
+
   savedInfo          : document.getElementById( 'saved-info' ),
   lastSavedDate      : document.getElementById( 'last-saved-date' ),
   lastSavedLevel     : document.getElementById( 'last-saved-level' ),
-  
+
   togglePointsScreen : document.getElementById( 'toggle-points-screen' ),
   togglePointsLabel  : document.getElementById( 'toggle-points-screen-label' ),
   togglePointsState  : document.getElementById( 'toggle-points-screen-state' ),
- 
+
   rowClass           : 'grid-row',
   cellClass          : 'grid-cell',
   lightCellClass     : 'light-cell',
-  
+
   btnClass           : 'btn',
   btnAlphaClass      : 'btn-alpha',
   btnBetaClass       : 'btn-beta',
@@ -43,5 +43,7 @@ define({
   activeStorageClass : 'active-storage',
   toggleOptionsClass : 'opened',
   toggleLabelClass   : 'active',
-  highlightClass     : 'highlight'
+  highlightClass     : 'highlight',
+
+  loadingClass       : 'loading-message'
 });

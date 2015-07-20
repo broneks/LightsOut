@@ -36,7 +36,7 @@ $muted         : #626262;
 $hoverDarken   : 5%;
 
 
-// mobile 
+// mobile
 $mobile-width-breakpoint  : ( $size * 1px ) + ( $extra-space * 2 );
 $mobile-game-border-width : 1px;
 
@@ -51,3 +51,4 @@ $mobile-game-border-width : 1px;
 @import 'partials/controls';
 @import 'partials/options';
 @import 'partials/media';
+@import 'partials/scores';

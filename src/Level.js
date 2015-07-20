@@ -1,4 +1,5 @@
-define(['settings', 'util', 'nodes', 'levels', 'Cell', 'Controls', 'Options'], function( settings, util, nodes, levels, Cell, Controls, Options ) {
+define(['settings', 'util', 'nodes', 'levels', 'Scores', 'Cell', 'Controls', 'Options'],
+  function( settings, util, nodes, levels, Scores, Cell, Controls, Options ) {
   'use strict';
 
   function Level() {
@@ -11,6 +12,7 @@ define(['settings', 'util', 'nodes', 'levels', 'Cell', 'Controls', 'Options'], f
     this.completed = false;
     this.controls  = new Controls( this );
     this.options   = new Options( this );
+    this.scores    = new Scores();
   }
 
   Level.prototype.constructor = Level;
@@ -49,7 +51,7 @@ define(['settings', 'util', 'nodes', 'levels', 'Cell', 'Controls', 'Options'], f
       rowPlan.forEach(function( cellPlan, cellIndex ) {
         var cellPos  = [rowIndex, cellIndex];
         var cell     = new Cell( self, cellPlan, cellPos );
-        var cellNode = cell.getCellNode(); 
+        var cellNode = cell.getCellNode();
 
         cellsRow.push( cell );
 
@@ -79,6 +81,9 @@ define(['settings', 'util', 'nodes', 'levels', 'Cell', 'Controls', 'Options'], f
       // TEMPORARY
       //
       util.text( nodes.levelName, 'You Beat the Game!', true );
+
+      // this.scores.showBoard();
+
       return;
 
       // TODO: handle game end and create end screen
@@ -88,7 +93,7 @@ define(['settings', 'util', 'nodes', 'levels', 'Cell', 'Controls', 'Options'], f
     // or a blueprint for the level does not already exist
     if ( ( this.number !== index ) && util.notExists( this.blueprint ) ) {
       level = levels[index];
-      
+
       if ( util.notExists( level ) ) {
         //
         // TEMPORARY
@@ -106,7 +111,7 @@ define(['settings', 'util', 'nodes', 'levels', 'Cell', 'Controls', 'Options'], f
       this.completed = false;
 
       // display the level number
-      util.text( nodes.levelName, settings.levelNameLabel + ' ' + ( index + 1 ), true ); 
+      util.text( nodes.levelName, settings.levelNameLabel + ' ' + ( index + 1 ), true );
     }
 
     this.visualizeBlueprint( this.blueprint );
@@ -118,7 +123,7 @@ define(['settings', 'util', 'nodes', 'levels', 'Cell', 'Controls', 'Options'], f
   //
   Level.prototype.update = function() {
     this.controls.countMoves();
-    
+
     this.options.removeLoadGameOverlay();
     this.options.closeOptions();
 
@@ -139,11 +144,13 @@ define(['settings', 'util', 'nodes', 'levels', 'Cell', 'Controls', 'Options'], f
     var sumOfStates = grid.reduce(function( a, b ) {
       return a.concat(b);
     }).reduce(function( a, b ) {
-      return a + b; 
+      return a + b;
     });
 
     // the level is complete if the sum of the cell states is equal to zero
-    return this.completed = sumOfStates === 0;
+    this.completed = sumOfStates === 0;
+
+    return this.completed;
   };
 
 
@@ -155,7 +162,7 @@ define(['settings', 'util', 'nodes', 'levels', 'Cell', 'Controls', 'Options'], f
 
     this.cells.forEach(function( row ) {
       row.forEach(function( cell ) {
-        cell.delete();        
+        cell.delete();
       });
     });
 
@@ -167,7 +174,7 @@ define(['settings', 'util', 'nodes', 'levels', 'Cell', 'Controls', 'Options'], f
     this.grid  = [];
   };
 
-  
+
   //
   // reset the level blueprint and associated details
   //
@@ -184,7 +191,7 @@ define(['settings', 'util', 'nodes', 'levels', 'Cell', 'Controls', 'Options'], f
   Level.prototype.loadLevel = function( number ) {
     if ( number !== this.number )
       this.resetBlueprint();
-    
+
     this.controls.resetMoves();
     this.render( number );
   };
@@ -199,18 +206,18 @@ define(['settings', 'util', 'nodes', 'levels', 'Cell', 'Controls', 'Options'], f
     var advance = function() {
       self.resetBlueprint();
       self.render( self.number + 1 );
-    };  
+    };
 
     if ( settings.showPointsScreen  ) {
       this.controls.showPointsScreen();
-      
+
       // delay the level advancement by however long the points screen is supposed to show
       util.timeout( advance, settings.pointsScreenDelay, this )();
     }
     else {
       this.controls.updateScore();
       this.controls.resetMoves();
-      
+
       advance();
     }
   };

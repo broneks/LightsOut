@@ -5,6 +5,8 @@ settings.js
 util.js
 nodes.js
 levels.js
+/home/bronek/github/LightsOut/game/lib/firebase/firebase.js
+Scores.js
 Cell.js
 Controls.js
 storage.js
