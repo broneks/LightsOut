@@ -4,24 +4,19 @@
 
 // spin
 //
-@-moz-keyframes spin { 
-  100% { -moz-transform: rotate( 360deg );  } 
-}
-@-webkit-keyframes spin { 
-  100% { -webkit-transform: rotate( 360deg );  } 
-}
-@keyframes spin { 
-  100% { transform: rotate( 360deg );  } 
+@include keyframes( spin ) {
+  100% { transform: rotate( 360deg );  }
 }
 
 // slide
 //
-@-moz-keyframes slide { 
-  100% { left: 48%; } 
-}
-@-webkit-keyframes slide { 
+@include keyframes( slide ) {
   100% { left: 48%; }
 }
-@keyframes slide { 
-  100% { left: 48%; }
+
+// fadeIn
+//
+@include keyframes( fadeIn ) {
+  from { opacity: 0; }
+  to   { opacity: 1; }
 }

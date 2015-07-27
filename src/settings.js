@@ -4,13 +4,14 @@ define({
   maxPoints         : 1800,
   minPoints         : 200,
   pointsModifier    : 45,
-  
+
   advanceLevelDelay  : 400,
   pointsScreenDelay  : 1500,
   saveHighlightDelay : 2000,
 
-  showPointsScreen  : true,
-  
+  showPointsScreen   : true,
+  maxScoreNameLength : 3,
+
   colourThemes : {
     'green'  : 'green-theme',
     'red'    : 'red-theme',

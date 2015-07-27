@@ -10,15 +10,13 @@ define(function( require ) {
     var toString = Object.prototype.toString;
     var array  = [1, '2', 3, [], {}];
     var obj    = {zero: 2, one: '1', two: ['2'], three: {num: 3}, four: function() {}};
-    var str    = '123';
+    var str    = 'testing';
     var num    = 123;
     var bool   = true;
     var func   = function() {};
     var nan    = NaN;
     var none   = null;
     var undef  = void 0;
-    var undef2 = undefined;
-    var undef3;
 
 
     describe('exists()', function() {
@@ -34,12 +32,10 @@ define(function( require ) {
     });
 
 
-    describe('notExists()', function() {
+    describe('not.exists()', function() {
       it('should return true', function() {
-        assert.isTrue(util.notExists(none));
-        assert.isTrue(util.notExists(undef));
-        assert.isTrue(util.notExists(undef2));
-        assert.isTrue(util.notExists(undef3));
+        assert.isTrue(util.not.exists(none));
+        assert.isTrue(util.not.exists(undef));
       });
     });
 
@@ -131,16 +127,16 @@ define(function( require ) {
         var callback = function() {
           done();
         };
-        
+
         util.timeout( callback, 100 )();
       });
 
       it('should preserve callback arguments', function( done ) {
         var callback = function( first, second ) {
-          if ( ( first > 3 ) && second ) 
+          if ( ( first > 3 ) && second )
             done();
         };
-        
+
         util.timeout( callback, 100 )( 5, true );
       });
 
@@ -155,8 +151,8 @@ define(function( require ) {
           indirect : function() {
             this.callback();
           }
-        }
-        
+        };
+
         util.timeout( testObj.indirect, 100, testObj.getThis() )();
       });
     });
@@ -180,10 +176,8 @@ define(function( require ) {
       it('should do nothing', function() {
         assert.isUndefined(util.getDateAndTime(obj));
         assert.isUndefined(util.getDateAndTime(str));
-        assert.isUndefined(util.getDateAndTime(bool));
         assert.isUndefined(util.getDateAndTime(func));
         assert.isUndefined(util.getDateAndTime(nan));
-        assert.isUndefined(util.getDateAndTime(none));
         assert.isUndefined(util.getDateAndTime(undef));
       });
     });
@@ -213,6 +207,23 @@ define(function( require ) {
       });
     });
 
+    describe('toArray()', function() {
+      it('should return undefined', function() {
+        var und = util.toArray( 'nonsense' );
+
+        assert.isUndefined( und );
+      });
+
+      it('should return an Array', function() {
+        var arr = util.toArray( {
+          'hello': 123,
+          'star': ['this', 'is', 'dog'],
+          'test': 'world'
+        } );
+
+        assert.isArray( arr );
+      });
+    });
 
     describe('getByClass()', function() {
       var notEmptyHTMLCollection = function( obj ) {
@@ -240,7 +251,7 @@ define(function( require ) {
         assert.isTrue(notEmptyHTMLCollection( gridRows ));
       });
 
-      it('should return an empty HTMLCollection object', function() {        
+      it('should return an empty HTMLCollection object', function() {
         var notFound = util.getByClass( 'not-found' );
 
         assert.isFalse(notEmptyHTMLCollection( notFound ));
@@ -257,7 +268,7 @@ define(function( require ) {
 
       it('should return null', function() {
         var notFound = util.getById( 'not-found' );
-        
+
         assert.isNull(notFound);
       });
     });
@@ -318,7 +329,7 @@ define(function( require ) {
           var styleAttr    = testDiv.getAttribute('style');
 
           assert.equal(dataTestAttr, attrs[0]['data-test']);
-          assert.equal(styleAttr, attrs[1]['style']);
+          assert.equal(styleAttr, attrs[1].style);
         });
       });
 
@@ -440,7 +451,7 @@ define(function( require ) {
 
         it('should remove testOne child from testDiv', function() {
           testDiv.appendChild(testOne);
-          
+
           assert.equal(testDiv.childNodes[0], testOne);
 
           util.remove(testDiv, testOne);

@@ -3,7 +3,17 @@ define(function() {
 
   var util = {};
 
-  var toString = Object.prototype.toString;
+  var toString       = Object.prototype.toString;
+  var hasOwnProperty = Object.prototype.hasOwnProperty;
+  var arraySlice     = Array.prototype.slice;
+
+  util.not = {};
+
+  function not( func ) {
+    return function() {
+      return !func.apply( null, arraySlice.call( arguments ) );
+    };
+  }
 
 
   //
@@ -12,14 +22,7 @@ define(function() {
   util.exists = function( x ) {
     return ( typeof x !== 'undefined' ) && ( x !== null );
   };
-
-
-  //
-  // check if x does not exists, is null or empty
-  //
-  util.notExists = function( x ) {
-    return !util.exists( x );
-  };
+  util.exists.api = [ 'not' ];
 
 
   //
@@ -28,6 +31,16 @@ define(function() {
   util.isNumber = function( x ) {
     return ( x === x ) && ( toString.call( x ) === '[object Number]' );
   };
+  util.isNumber.api = [ 'not' ];
+
+
+  //
+  // check if x is a function
+  //
+  util.isFunction = function( x ) {
+    return toString.call( x ) === '[object Function]' || typeof x === 'function';
+  };
+  util.isFunction.api = [ 'not' ];
 
 
   //
@@ -76,6 +89,8 @@ define(function() {
     return function( date ) {
       if ( toString.call( date ) !== '[object Date]' ) {
         date = new Date( date );
+
+        if ( isNaN( date ) ) return;
       }
 
       var month   = MONTHS[date.getMonth()];
@@ -99,6 +114,30 @@ define(function() {
     for( key in obj) {
       if( obj[key] === value )
         return key;
+    }
+  };
+
+
+  //
+  // check if value is in array
+  //
+  util.foundInArray = function( arr, value ) {
+    if ( Array.isArray( arr ) ) {
+      return arr.indexOf( value ) > -1;
+    }
+  };
+  util.foundInArray.api = [ 'not' ];
+
+
+  //
+  // object to array
+  //
+  util.toArray = function( obj ) {
+    if ( typeof obj === 'object' && !!obj ) {
+
+      return Object.keys( obj ).map(function( key ) {
+        return obj[key];
+      });
     }
   };
 
@@ -145,6 +184,7 @@ define(function() {
   util.hasClass = function( node, className ) {
     return node.classList.contains( className );
   };
+  util.hasClass.api = [ 'not' ];
 
 
   //
@@ -228,8 +268,14 @@ define(function() {
   //
   // remove an element from the DOM
   //
-  util.remove = function( parent, child ) {
-    parent.removeChild( child );
+  util.remove = function( parent, child, removeAll ) {
+    if ( removeAll ) {
+      arraySlice.call( parent.children ).forEach(function( c ) {
+        parent.removeChild( c );
+      });
+    } else {
+      parent.removeChild( child );
+    }
 
     return util;
   };
@@ -242,6 +288,8 @@ define(function() {
     var fn = context ? callback.bind( context ) : callback;
 
     node.addEventListener( eventType, fn, useCapture );
+
+    return util;
   };
 
 
@@ -252,7 +300,7 @@ define(function() {
     var elts = document.getElementsByClassName( className );
 
     if ( returnArray )
-      return Array.prototype.slice.call( elts );
+      return arraySlice.call( elts );
     else
       return elts;
   };
@@ -264,6 +312,28 @@ define(function() {
   util.getById = function( id ) {
     return document.getElementById( id );
   };
+
+
+
+  //
+  // set interfaces
+  //
+  (function setInterfaces() {
+    var options = util;
+    var option;
+    var api;
+
+    for ( option in options ) {
+      if ( hasOwnProperty.call( options, option ) && util.isFunction( options[option] ) ) {
+        api = options[option].api || [];
+
+        // limited to 'not' for now
+        if ( api[0] === 'not' ) {
+          util.not[option] = not( util[option] );
+        }
+      }
+    }
+  })();
 
 
   return util;

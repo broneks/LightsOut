@@ -77,31 +77,25 @@ define(['settings', 'util', 'nodes', 'levels', 'Scores', 'Cell', 'Controls', 'Op
 
     // the last level was beat -- show the game end screen
     if ( ( this.number === levels.length - 1 ) && index === levels.length ) {
-      //
-      // TEMPORARY
-      //
-      util.text( nodes.levelName, 'You Beat the Game!', true );
+      util
+        .remove( nodes.controls, null, true )
+        .text( nodes.levelName, 'You Beat the Game!', true )
+        .addClass( nodes.controls, 'removed' );
 
-      // this.scores.showBoard();
+      this.scores.showForm( this.controls.score );
 
       return;
-
-      // TODO: handle game end and create end screen
     }
 
     // if the current level number is not the same as the index passed in
     // or a blueprint for the level does not already exist
-    if ( ( this.number !== index ) && util.notExists( this.blueprint ) ) {
+    if ( ( this.number !== index ) && util.not.exists( this.blueprint ) ) {
       level = levels[index];
 
-      if ( util.notExists( level ) ) {
-        //
-        // TEMPORARY
-        //
+      if ( util.not.exists( level ) ) {
         util.text( nodes.levelName, 'Level Not Found...', true );
-        return;
 
-        // TODO: handle level not found screen
+        return;
       }
 
       this.number    = index;

@@ -41,7 +41,7 @@ gulp.task('uglify', function() {
     .pipe(uglify({
       preserveComments: 'some'
     }))
-    .pipe(gulp.dest('./game/js'))
+    .pipe(gulp.dest('./game/js'));
 });
 
 gulp.task('build', shell.task([

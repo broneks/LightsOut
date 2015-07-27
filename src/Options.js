@@ -6,12 +6,13 @@ define(['settings', 'util', 'nodes', 'storage'], function( settings, util, nodes
     var self   = this;
     var loaded = storage.load();
 
-    util.addEvent( nodes.optionsToggle, 'click', self.toggleOptions, false, self );
-    util.addEvent( nodes.themeSelect, 'click', self.updateTheme, false, self );
-    util.addEvent( nodes.togglePointsScreen, 'click', self.togglePointsScreen, false, self );
-    util.addEvent( nodes.saveButton, 'click', self.saveGame, false, self );
-    util.addEvent( nodes.loadButton, 'click', self.loadGame, false, self );
-      
+    util
+      .addEvent( nodes.optionsToggle, 'click', self.toggleOptions, false, self )
+      .addEvent( nodes.themeSelect, 'click', self.updateTheme, false, self )
+      .addEvent( nodes.togglePointsScreen, 'click', self.togglePointsScreen, false, self )
+      .addEvent( nodes.saveButton, 'click', self.saveGame, false, self )
+      .addEvent( nodes.loadButton, 'click', self.loadGame, false, self );
+
     // access storage on load
     if ( loaded ) {
       this.setLastSavedInfo( loaded );
@@ -41,8 +42,9 @@ define(['settings', 'util', 'nodes', 'storage'], function( settings, util, nodes
     var load   = util.elt( 'button', nodes.initLoadButtonClass, null, 'Load Game' );
     var cancel = util.elt( 'button', nodes.initCancelButtonClass, null, 'Cancel' );
 
-    util.addEvent( load, 'click', self.loadGame, false, self );
-    util.addEvent( cancel, 'click', self.removeLoadGameOverlay, false, self );
+    util
+      .addEvent( load, 'click', self.loadGame, false, self )
+      .addEvent( cancel, 'click', self.removeLoadGameOverlay, false, self );
 
     // create a wrapper
     this.loadGameWrapper = util.elt( 'div', nodes.initLoadClass );
@@ -78,7 +80,7 @@ define(['settings', 'util', 'nodes', 'storage'], function( settings, util, nodes
       // the default theme is inititally selected
       if ( theme === settings.currentTheme ) {
         attrs.push( { 'selected': true } );
-      } 
+      }
 
       option = util.elt( 'option', null, attrs, theme );
 
@@ -109,7 +111,7 @@ define(['settings', 'util', 'nodes', 'storage'], function( settings, util, nodes
       nodes.themeSelect.selectedIndex = currentThemeIndex;
     }
 
-    if ( !util.hasClass( nodes.body, themeClass ) ) {
+    if ( util.not.hasClass( nodes.body, themeClass ) ) {
       util.removeClass( nodes.body, true );
       util.addClass( nodes.body, themeClass );
     }
@@ -152,7 +154,7 @@ define(['settings', 'util', 'nodes', 'storage'], function( settings, util, nodes
       util.removeClass( labelNode, nodes.toggleLabelClass );
     }
 
-    util.text( innerNode, label, true ); 
+    util.text( innerNode, label, true );
   };
 
 
@@ -231,7 +233,7 @@ define(['settings', 'util', 'nodes', 'storage'], function( settings, util, nodes
 
     if ( levelExists )
       util.text( nodes.lastSavedLevel, settings.levelNameLabel + ' ' + ( info.level + 1 ), true );
-  
+
     if ( dateExists || levelExists ) {
       util.addClass( nodes.savedInfo, nodes.highlightClass );
 

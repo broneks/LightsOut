@@ -29,7 +29,7 @@ define(['settings', 'util', 'nodes'], function( settings, util, nodes ) {
     var pointsEarned;
 
     if ( this.level.completed ) {
-      
+
       if ( this.moves <= this.level.minMoves )
         pointsEarned = settings.maxPoints;
       else
@@ -80,8 +80,9 @@ define(['settings', 'util', 'nodes'], function( settings, util, nodes ) {
     this.resetMoves();
 
     // show level stats
-    util.text( nodes.pointsEarned, points, true );
-    util.text( nodes.movesMade, moves, true );
+    util
+      .text( nodes.pointsEarned, points, true )
+      .text( nodes.movesMade, moves, true );
 
     // show the points screen
     util.addClass( nodes.pointsScreen, 'show' );
@@ -96,8 +97,9 @@ define(['settings', 'util', 'nodes'], function( settings, util, nodes ) {
   //
   Controls.prototype.hidePointsScreen = function() {
     // clear level stats
-    util.text( nodes.pointsEarned, '', true );
-    util.text( nodes.movesMade,'', true );
+    util
+      .text( nodes.pointsEarned, '', true )
+      .text( nodes.movesMade,'', true );
 
 
     util.removeClass( nodes.pointsScreen, 'show' );

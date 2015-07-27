@@ -1,4 +1,4 @@
-// 
+//
 // Themes
 //
 
@@ -13,7 +13,7 @@ $cats    : 'http://lorempixel.com/76/76/cats/';
 @mixin colorSet( $colors: $default ) {
   $dark  : nth( $colors, 1 );
   $light : nth( $colors, 2 );
-  
+
   //
   // Global
   //
@@ -41,7 +41,7 @@ $cats    : 'http://lorempixel.com/76/76/cats/';
   //
   #game-container {
     border: $game-border-width solid $dark;
-    
+
     .grid-cell {
       background-color: $dark;
 
@@ -61,7 +61,7 @@ $cats    : 'http://lorempixel.com/76/76/cats/';
 
 
   //
-  // Controls 
+  // Controls
   //
   #game-controls {
     border: $game-border-width solid $dark;
@@ -77,17 +77,24 @@ $cats    : 'http://lorempixel.com/76/76/cats/';
 
 
   @media screen and ( max-width: $mobile-width-breakpoint ) {
-    
+
     #game-container,
     #game-controls {
       border-width: $mobile-game-border-width;
     }
 
   }
+
+  //
+  // Score Screens
+  //
+  .high-scores-label {
+    border-bottom: $game-border-width solid $dark;
+  }
 }
 
 
-// default theme 
+// default theme
 body {
   @include colorSet();
 }
@@ -112,7 +119,7 @@ body.purple-theme {
   @include colorSet( $purple );
 }
 
-// cats theme 
+// cats theme
 body.cats-theme {
   #game-container {
     .grid-cell {
